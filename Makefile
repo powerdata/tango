@@ -7,7 +7,7 @@ PROGRAMS = psdsim
 
 all: $(PROGRAMS)
 
-psdsim: avr1.o gen1.o output.o
+psdsim: avr1.o gen1.o int.o matrix.o output.o
 
 clean:
 	rm -f $(PROGRAMS) *.o
