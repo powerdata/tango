@@ -7,6 +7,8 @@ PROGRAMS = psdsim
 
 all: $(PROGRAMS)
 
+psdsim: avr1.o output.o
+
 clean:
-	rm -f $(PROGRAMS)
+	rm -f $(PROGRAMS) *.o
 

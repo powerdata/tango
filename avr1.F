@@ -2,13 +2,7 @@ C  ********************************************************************
 C  *  ROTATING EXCITATION SYSTEM - IEEE TYPE 1 MODEL                  *
 C  ********************************************************************
       SUBROUTINE AVR1(I)
-      COMMON /BLOCK1/ TIME,TSTEP
-      COMMON /BLOCK3/ KA(10),KE(10),KF(10),TA(10),TE(10),
-     1TF(10),VRMIN(10),VRMAX(10),C1(10),C2(10),DUM(10,6)
-      COMMON /BLOCK5/ VT(10),CT(10),EF(10),PM(10)
-      COMMON /BLOCK6/ PLUG(10,16),OUT(10,16),SAVE(10,16)
-      COMMON /BLOCK9/ PRTVAR(10,20)
-      COMPLEX VT,CT
+      INCLUDE 'common.fin'
       REAL KA,KE,KF,VREF(10),SE(10)
 C  ENTER HERE FOR EACH INTEGRATION STEP.
 C  DEFINE INTEGRATOR OUTPUTS.
