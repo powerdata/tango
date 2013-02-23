@@ -5,7 +5,7 @@ C  *                                                                  *
 C  ********************************************************************
 C
 C  MAINLINE ROUTINE.
-      INCLUDE 'common.fin'
+      INCLUDE 'common.for'
       COMPLEX YFICT
       COMPLEX CMPLX,CONJG
       NT=0
