@@ -3,7 +3,7 @@ C  *  ROTATING EXCITATION SYSTEM - IEEE TYPE 1 MODEL                  *
 C  ********************************************************************
       SUBROUTINE AVR1(I)
       INCLUDE 'common.for'
-      REAL KA,KE,KF,VREF(10),SE(10)
+      REAL VREF(10),SE(10)
 C  ENTER HERE FOR EACH INTEGRATION STEP.
 C  DEFINE INTEGRATOR OUTPUTS.
       X5=OUT(I,6)

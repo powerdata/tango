@@ -4,8 +4,8 @@ C  ********************************************************************
       SUBROUTINE OUTPUT(NGEN)
       INCLUDE 'common.for'
       IF(TIME .EQ. 0.0) WRITE(6,2000)
-2000  FORMAT('1'//T42,'SIMULATED RESPONSES',//T4,'TIME  GEN  ROTOR  ',
-     1'ROTOR    EQ''     ED''    TERM    ELEC-POWER     FIELD   ',
+2000  FORMAT('1'//T42,'SIMULATED RESPONSES',//T4,'TIME  GEN  ROTOR   ',
+     1'ROTOR    EQ''     ED''    TERM     ELEC-POWER     FIELD   ',
      2'MECH    SATN   AIR GAP'/T4,'SECS   NO  ANGLE   SPEED    ',
      3'VOLTS   VOLTS  VOLTS    REAL   IMAG    VOLTS   POWER  ',
      4'FACTOR   VOLTS'/)

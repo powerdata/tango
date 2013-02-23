@@ -7,7 +7,7 @@ PROGRAMS = psdsim
 
 all: $(PROGRAMS)
 
-psdsim: avr1.o gen1.o int.o matrix.o output.o
+psdsim: avr1.o gen1.o int.o matrix.o nwsol.o output.o plot.o
 
 clean:
 	rm -f $(PROGRAMS) *.o
