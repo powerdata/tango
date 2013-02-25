@@ -2,6 +2,7 @@ C  ********************************************************************
 C  * SUBROUTINE TO SOLVE NETWORK AND ARMATURE EQUATIONS.
 C  ********************************************************************
       SUBROUTINE NWSOL(NGEN)
+      SAVE
       COMPLEX SCALE,ROTATE
       REAL ID,IQ
       COMPLEX CMPLX,CONJG,Y,VT,CT

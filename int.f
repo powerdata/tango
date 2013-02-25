@@ -2,6 +2,7 @@ C  ********************************************************************
 C  * SUBROUTINE TO CALCULATE STATE VARIABLES FOR NEXT INCREMENT IN TIME
 C  ********************************************************************
       SUBROUTINE INT(NGEN)
+      SAVE
       COMMON /BLOCK1/ TIME,TSTEP
       COMMON /BLOCK6/ PLUG(10,16),OUT(10,16),SAVE(10,16)
       IF(TIME .EQ. 0.0) GO TO 20

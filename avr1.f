@@ -2,6 +2,7 @@ C  ********************************************************************
 C  *  ROTATING EXCITATION SYSTEM - IEEE TYPE 1 MODEL                  *
 C  ********************************************************************
       SUBROUTINE AVR1(I)
+      SAVE
       COMMON /BLOCK1/ TIME,TSTEP
       COMMON /BLOCK3/ KA(10),KE(10),KF(10),TA(10),TE(10),
      1TF(10),VRMIN(10),VRMAX(10),C1(10),C2(10),DUM(10,6)

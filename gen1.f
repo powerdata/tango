@@ -3,6 +3,7 @@ C  *  MODEL OF SYNCHRONOUS GENERATOR WITH FIELD WINDING IN D AXIS AND
 C  *  DAMPER WINDING IN O AXIS
 C  ********************************************************************
       SUBROUTINE GEN1(I)
+      SAVE
       COMMON /BLOCK1/ TIME,TSTEP
       COMMON /BLOCK2/ PBASE(10),H(10),R(10),XL(10),XD(10),XD1(10),
      1XQ(10),XQ1(10),TD1(10),TQ1(10),DAMP(10),C1(10),C2(10)
