@@ -7,7 +7,7 @@ C  ********************************************************************
       INCLUDE 'cblocks.inc'
       REAL CSAT(10)
       COMPLEX CONJG,CMPLX,EQD,CURR
-      REAL ID,IQ,OME,DEL,EQ,ED,EAD,EAQ,EAT,OMF,PE,PL,QE
+      REAL ID,IQ,OME,DEL,EQ,ED,EAD,EAQ,EAT,PE,PL,QE
       REAL TD1S,TQ1S,XDS,XQS
       INTEGER I,J
 C  ENTER HERE FOR EACH INTEGRATION STEP.
@@ -42,7 +42,7 @@ C  SET UP PRINTOUT VARIABLES.
       PLUG(I,3)=(CSAT(I)*EF(I)-EQ-(XDS-XD1(I))*ID)/TD1S
       PLUG(I,4)=(-ED+(XQS -XQ1(I))*IQ)/TQ1S
       PRTVAR(I,1)=DEL*180.0/PI
-      PRTVAR(I,2)=OMF
+      PRTVAR(I,2)=OME
       PRTVAR(I,3)=EQ
       PRTVAR(I,4)=ED
       PRTVAR(I,5)=CABS(VT(I))
