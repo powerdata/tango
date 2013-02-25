@@ -1,17 +1,32 @@
 
 FC = gfortran
+CC = $(FC)
 FFLAGS = -g -fbounds-check
 #FFLAGS = -O3
 
-PROGRAMS = psdsim
+#
+#	Source
+#
+INCSRC = cblocks.inc
+LIBSRC = avr1.f gen1.f int.f matrix.f nwsol.f output.f plot.f
+EXESRC = psdsim.f
 
-all: $(PROGRAMS)
+LIBOBJ = $(LIBSRC:%.f=%.o)
+EXEOBJ = $(EXESRC:%f=%.o)
+OBJ = $(EXEOBJ) $(LIBOBJ)
+PROGRAMS = $(EXESRC:%.f=%)
 
-psdsim: avr1.o gen1.o int.o matrix.o nwsol.o output.o plot.o
+all: $(LIBOBJ) $(PROGRAMS)
 
+psdsim: $(LIBOBJ)
+
+$(OBJ) : $(INCSRC)
+
+.PHONY : test
 test: psdsim
 	psdsim < examplestudy.dat
 
+.PHONY : clean
 clean:
 	rm -f $(PROGRAMS) *.o
 

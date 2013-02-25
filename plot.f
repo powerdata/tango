@@ -2,8 +2,10 @@ C  ********************************************************************
 C  * SUBROUTINE TO PLOT GRAPHS OF SYSTEM VARIABLES
 C  ********************************************************************
       SUBROUTINE PLOT
-      SAVE
-      COMMON /BLOCK8/ TYM(200),VAR(200,6),NT,NVAR
+      IMPLICIT NONE
+      INCLUDE 'cblocks.inc'
+      INTEGER I,J,LOC
+      REAL RANGE,SCALE,LOG
       CHARACTER SYMBOL(6),PLUS,NAME(6,40),ALINE(132),BLANK
       DATA SYMBOL/'A','B','C','D','E','F'/
       DATA PLUS/'+'/,BLANK/' '/
