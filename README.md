@@ -3,7 +3,7 @@ This code is provided as an example for Power System Dynamic Simulations origina
 
 ## More Information
 
-Please check out [INCSYSURL](http://incsys.com/smartgrid.htm) for more information on this effort.
+Please check out [IncSys](http://incsys.com/smartgrid.htm) for more information on this effort.
 
 ## Contact
 
