@@ -4,8 +4,8 @@ C  ********************************************************************
       SUBROUTINE PLOT
       IMPLICIT NONE
       INCLUDE 'cblocks.inc'
-      INTEGER I,J,LOC
-      REAL RANGE,SCALE,LOG
+      INTEGER I,J,LOC,LOG
+      REAL RANGE,SCALE
       CHARACTER SYMBOL(6),PLUS,NAME(6,40),ALINE(132),BLANK
       DATA SYMBOL/'A','B','C','D','E','F'/
       DATA PLUS/'+'/,BLANK/' '/
