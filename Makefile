@@ -9,6 +9,9 @@ all: $(PROGRAMS)
 
 psdsim: avr1.o gen1.o int.o matrix.o nwsol.o output.o plot.o
 
+test: psdsim
+	psdsim < examplestudy.dat
+
 clean:
 	rm -f $(PROGRAMS) *.o
 

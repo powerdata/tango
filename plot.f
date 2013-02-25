@@ -2,7 +2,7 @@ C  ********************************************************************
 C  * SUBROUTINE TO PLOT GRAPHS OF SYSTEM VARIABLES
 C  ********************************************************************
       SUBROUTINE PLOT
-      INCLUDE 'common.for'
+      COMMON /BLOCK8/ TYM(200),VAR(200,6),NT,NVAR
       CHARACTER SYMBOL(6),PLUS,NAME(6,40),ALINE(132),BLANK
       DATA SYMBOL/'A','B','C','D','E','F'/
       DATA PLUS/'+'/,BLANK/' '/

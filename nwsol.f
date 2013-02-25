@@ -2,13 +2,17 @@ C  ********************************************************************
 C  * SUBROUTINE TO SOLVE NETWORK AND ARMATURE EQUATIONS.
 C  ********************************************************************
       SUBROUTINE NWSOL(NGEN)
-      INCLUDE 'common.for'
       COMPLEX SCALE,ROTATE
       REAL ID,IQ
-      COMPLEX CMPLX,CONJG
+      COMPLEX CMPLX,CONJG,Y,VT,CT
       COMPLEX VOLD,YFICT
+      COMMON /BLOCK2/ PBASE(10),H(10),R(10),XL(10),XD(10),XD1(10),
+     1XQ(10),XQ1(10),TD1(10),TQ1(10),DAMP(10),C1(10),C2(10)
+      COMMON /BLOCK5/ VT(10),CT(10),EF(10),PM(10)
+      COMMON /BLOCK6/ PLUG(10,16),OUT(10,16),SAVE(10,16)
+      COMMON /BLOCK7/ Y(11,11)
       COMPLEX EFICT(10),E(10)
-      REAL DEL(10)
+       REAL DEL(10)
       DO 10 I=1,NGEN
       DEL(I)=OUT(I,2)
       EQ=OUT(I,3)
@@ -34,7 +38,7 @@ C  LOOP HERE FOR EACH ITERATION.
 25    CT(I)=CT(I)+Y(I,J)*EFICT(J)
 30    CONTINUE
       DO 40 I=1,NGEN
-      YFICT=CMPLX(R(I),-(XD1(I)+XQ1(I))/2.0)/(R(I)*R(I)+XD1(I)+XQ1(I))
+      YFICT=CMPLX(R(I),-(XD1(I)+XQ1(I))/2.0)/(R(I)*R(I)+XD1(I)*XQ1(I))
       VT(I)=EFICT(I)-CT(I)/YFICT
 40    CONTINUE
 C  CHECK FOR CONVERGENCE.

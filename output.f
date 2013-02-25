@@ -2,7 +2,9 @@ C  ********************************************************************
 C  *  SUBROUTINE TO PRINTOUT SYSTEM VARIABLES                         *
 C  ********************************************************************
       SUBROUTINE OUTPUT(NGEN)
-      INCLUDE 'common.for'
+      COMMON /BLOCK1/ TIME,TSTEP
+      COMMON /BLOCK8/ TYM(200),VAR(200,6),NT,NVAR
+      COMMON /BLOCK9/ PRTVAR(10,20)
       IF(TIME .EQ. 0.0) WRITE(6,2000)
 2000  FORMAT('1'//T42,'SIMULATED RESPONSES',//T4,'TIME  GEN  ROTOR   ',
      1'ROTOR    EQ''     ED''    TERM     ELEC-POWER     FIELD   ',
