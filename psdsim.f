@@ -1,6 +1,6 @@
 C  ********************************************************************
 C  *                                                                  *
-C  *             POWER SYSTEM DYNAMI SIMULATION PROGRAM               *
+C  *             POWER SYSTEM DYNAMIC SIMULATION PROGRAM              *
 C  *                                                                  *
 C  ********************************************************************
 C
@@ -28,7 +28,7 @@ C  CLEAR INTEGRATOR ARRAYS
       DO 12 J=1,20
 12    PRTVAR(I,J)=0.0
       WRITE(6,990)
-990   FORMAT('1',T39,'POWER  SYSTEM  RESOURCE  GROUP'//
+990   FORMAT('1',T39,'POWER  SYSTEM  RESEARCH  GROUP'//
      1T40,'UNIVERSITY  OF  SASKATCHEWAN'//
      2T32,'POWER  SYSTEM  DYNAMIC  SIMULATION  PROGRAM'//)
       READ(5,1000) NGEN,TSTEP,TPRINT

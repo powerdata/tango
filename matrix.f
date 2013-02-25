@@ -7,7 +7,7 @@ C  ********************************************************************
       INCLUDE 'cblocks.inc'
       COMPLEX YFICT,CMPLX,CONJG
       INTEGER NGEN,I,J,N,M,N1
-C  AUTMENT Y MATRIX WITH GENERATOR BUSES AND ELIMINATE TH
+C  AUGMENT Y MATRIX WITH GENERATOR BUSES AND ELIMINATE THE
 C  TERMINAL BUSES.
       N1=NGEN+1
       DO 80 I=1,NGEN
