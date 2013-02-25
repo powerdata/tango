@@ -5,6 +5,7 @@ C  *                                                                  *
 C  ********************************************************************
 C
 C  MAINLINE ROUTINE.
+      PROGRAM PSDSIM
       COMPLEX VT,CT,Y,YFICT
       COMPLEX CMPLX,CONJG
       COMMON /BLOCK1/ TIME,TSTEP
@@ -17,6 +18,7 @@ C  MAINLINE ROUTINE.
       COMMON /BLOCK7/ Y(11,11)
       COMMON /BLOCK8/ TYM(200),VAR(200,6),NT,NVAR
       COMMON /BLOCK9/ PRTVAR(10,20)
+      REAL AVRPRM
       NT=0
       TIME=0.0
       TFIN=0.0
@@ -133,7 +135,7 @@ C  ********************************************************************
 C  ********************************************************************
 C  CHECK FOR OUTPUT.
       IF(NSTEP .EQ. 0) CALL OUTPUT(NGEN)
-      IF(NPRINT*TSETP .LT. TPRINT-.0001) GO TO 125
+      IF(NPRINT*TSTEP .LT. TPRINT-.0001) GO TO 125
       CALL OUTPUT(NGEN)
       NPRINT=0
 125   CONTINUE
