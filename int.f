@@ -15,7 +15,7 @@ C  SOFTWARE.
 C
       SUBROUTINE INT(NGEN)
       IMPLICIT NONE
-      INCLUDE 'cblocks.inc'
+      INCLUDE 'cblocks.fpp'
       INTEGER I,J,NGEN,NFLAG
       IF(TIME .EQ. 0.0) GO TO 20
       DO 10 I=1,NGEN

@@ -16,7 +16,7 @@ C  SOFTWARE.
 C
       SUBROUTINE GEN1(I)
       IMPLICIT NONE
-      INCLUDE 'cblocks.inc'
+      INCLUDE 'cblocks.fpp'
       REAL CSAT(10)
       COMPLEX CONJG,CMPLX,EQD,CURR
       REAL ID,IQ,OME,DEL,EQ,ED,EAD,EAQ,EAT,PE,PL,QE

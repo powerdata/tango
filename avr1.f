@@ -15,7 +15,7 @@ C  SOFTWARE.
 C
       SUBROUTINE AVR1(I)
       IMPLICIT NONE
-      INCLUDE 'cblocks.inc'
+      INCLUDE 'cblocks.fpp'
       REAL VREF(10),SE(10)
       INTEGER I,J
       REAL X1,X2,X3,X4,X5,X6,X7,X8

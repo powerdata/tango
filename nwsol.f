@@ -15,7 +15,7 @@ C  SOFTWARE.
 C
       SUBROUTINE NWSOL(NGEN)
       IMPLICIT NONE
-      INCLUDE 'cblocks.inc'
+      INCLUDE 'cblocks.fpp'
       COMPLEX SCALE,ROTATE
       REAL ID,IQ
       COMPLEX CMPLX,CONJG

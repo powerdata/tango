@@ -7,9 +7,9 @@ FFLAGS = -g -fbounds-check
 #
 #	Source
 #
-INCSRC = cblocks.inc
+INCSRC = cblocks.fpp
 LIBSRC = avr1.f gen1.f int.f matrix.f nwsol.f output.f plot.f
-EXESRC = psdsim.f
+EXESRC = tango.f
 
 LIBOBJ = $(LIBSRC:%.f=%.o)
 EXEOBJ = $(EXESRC:%f=%.o)
@@ -18,13 +18,13 @@ PROGRAMS = $(EXESRC:%.f=%)
 
 all: $(LIBOBJ) $(PROGRAMS)
 
-psdsim: $(LIBOBJ)
+tango: $(LIBOBJ)
 
 $(OBJ) : $(INCSRC)
 
 .PHONY : test
-test: psdsim
-	psdsim < examplestudy.dat
+test: tango
+	tango < examplestudy.dat
 
 .PHONY : clean
 clean:
