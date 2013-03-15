@@ -10,7 +10,7 @@ class PsdDataReader
 	protected static Pattern _WS = Pattern.compile("\\S+");
 	BufferedReader _in;
 	Matcher _m;
-	
+	String _l;
 	
 	public PsdDataReader(BufferedReader in) throws IOException
 	{
@@ -19,25 +19,26 @@ class PsdDataReader
 
 	public boolean nextRec() throws IOException
 	{
-		String l = _in.readLine();
-		if (l == null) return true;
-		_m = _WS.matcher(l);
+		_l = _in.readLine();
+		if (_l == null) return true;
+		_m = null;
 		return false;
 	}
 	
 	public String getNextString() throws IOException
 	{
+		if (_m==null) _m = _WS.matcher(_l);
 		return _m.find() ? _m.group() : null;
 	}
 	
 	public int getNextInt() throws IOException
 	{
-		return Integer.parseInt(getNextString());
+		return Integer.parseInt(getNextString().trim());
 	}
 	
 	public float getNextFloat() throws IOException
 	{
-		return Float.parseFloat(getNextString());
+		return Float.parseFloat(getNextString().trim());
 	}
 
 	public void loadArray(float[][] block, int slofs, int sllen, int ofs) throws IOException
@@ -64,5 +65,14 @@ class PsdDataReader
 			lre[start] = Float.parseFloat(sre);
 			lim[start] = Float.parseFloat(sim);
 		}
+	}
+
+	public String readChars(int i)
+	{
+		int start = (_m == null) ? 0 : _m.end();
+		String rv = _l.substring(start, i).trim();
+		_l = _l.substring(start+i);
+		_m = null;
+		return rv;
 	}
 }

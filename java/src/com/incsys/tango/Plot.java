@@ -42,7 +42,7 @@ public class Plot
 			if(_rdr.nextRec()) break;
 //3     	READ(5,1000,END=5) (NAME(I,J),J=1,40),VMIN(I),VMAX(I)
 //1000  	FORMAT(40A1,F10.5,F10.5)
-			name[i] = _rdr.getNextString();
+			name[i] = _rdr.readChars(40);
 			vmin[i] = _rdr.getNextFloat();
 			vmax[i] = _rdr.getNextFloat();
 		}

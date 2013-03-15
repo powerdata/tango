@@ -40,7 +40,7 @@ public class Matrix
 //	    	Y(I,I)=(0.0,0.0)
 			y[i].set(i, Complex.Zero);
 //	    	DO 75 J=1,NGEN
-			for(j=0; i < ngen; ++j)
+			for(j=0; j < ngen; ++j)
 			{
 				/* MOVE ROW */
 //	    	    Y(N1,J)=Y(I,J)
