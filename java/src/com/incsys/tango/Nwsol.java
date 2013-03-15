@@ -76,11 +76,11 @@ public class Nwsol
 //		    	THETA=DEL(I)-PI/2.0
 				theta=del[i]-(float)Math.PI/2F;
 //		    	SCALE=CMPLX(0.0,(XQ1(I)-XD1(I))*0.5)/CMPLX(R(I),-(XQ1(I)+XD1(I))*0.5)
-				scale=new Complex(0F,(xq[i]-xd1[i])*.5F).divide(r[i], -(xq1[i]+xd1[i])*0.5F);
+				scale=new Complex(0F,(xq1[i]-xd1[i])*.5F).divide(r[i], -(xq1[i]+xd1[i])*0.5F);
 //		    	ROTATE=CMPLX(COS(2.0*THETA),SIN(2.0*THETA))
 				rotate=new Complex((float)Math.cos(2F*theta), (float)Math.sin(2F*theta));
 //		    	EFICT(I)=E(I)+SCALE*CONJG(E(I)-VT(I))*ROTATE
-				efict.set(i, e.get(i).add(scale.multiply(e.get(i).subtract(vt.get(i)).conjugate())));
+				efict.set(i, e.get(i).add(scale.multiply(e.get(i).subtract(vt.get(i)).conjugate()).multiply(rotate)));
 //		    20CONTINUE
 			}
 			
@@ -123,7 +123,7 @@ public class Nwsol
 //		      	THETA=DEL(I)-PI/2.0
 				theta=del[i]-(float)Math.PI/2F;
 //		      	ROTATE=CMPLX(COS(THETA),-SIN(THETA))
-				rotate=new Complex((float)Math.cos(theta), (float)Math.sin(theta));
+				rotate=new Complex((float)Math.cos(theta), -(float)Math.sin(theta));
 //		      	ID=REAL(CT(I)*ROTATE)
 				id=ct.get(i).multiply(rotate).re();
 //		      	IQ=AIMAG(CT(I)*ROTATE)
@@ -135,7 +135,7 @@ public class Nwsol
 //		      	IF(ABS(EQ-R(I)*IQ-XD1(I)*ID-VQ) .GT. .001) NFLAG=1
 //		      	IF(ABS(ED-R(I)*ID+XQ1(I)*IQ-VD) .GT. .001) NFLAG=1
 				if(Math.abs(eq-r[i]*iq-xd1[i]*id-vq) > .001F ||
-				   Math.abs(ed-r[i]*id+xq[i]*iq-vd) > .001F)
+				   Math.abs(ed-r[i]*id+xq1[i]*iq-vd) > .001F)
 				{
 					nflag=1;
 				}
@@ -153,7 +153,7 @@ public class Nwsol
 			for (i=0; i < ngen; ++i)
 			{
 				_wrtr.format(" TERM %5d%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f\n", 
-					i, vt.re()[i], vt.im()[i], ct.re()[i], ct.im()[i], vd, vq, vd1, vq1, id, iq);
+					i+1, vt.re()[i], vt.im()[i], ct.re()[i], ct.im()[i], vd, vq, vd1, vq1, id, iq);
 			}
 		}
 	}

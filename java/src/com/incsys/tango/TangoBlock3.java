@@ -6,7 +6,7 @@ public class TangoBlock3 extends RealCommonBlock
 {
 	public TangoBlock3(int ngen)
 	{
-		super(10, ngen);
+		super(16, ngen);
 	}
 
 	public void load(int ngen, PsdDataReader rdr) throws IOException

@@ -74,7 +74,7 @@ public class Complex
 	
 	final public Complex multiply(float re2, float im2)
 	{
-		return new Complex(_re*re2-_im*im2, _re*im2+_im*re2); 
+		return new Complex(_re*re2-_im*im2, _im*re2+_re*im2);
 	}
 
 	final public Complex divide(float scalar)
@@ -89,9 +89,21 @@ public class Complex
 	
 	final public Complex divide(float divre, float divim)
 	{
-		/* invert the divisor */
-		float den = divre*divre + divim*divim;
-		/* multiply */
-		return multiply(divre/den, divre/-den);
+		float den = divre * divre + divim * divim;
+		return new Complex((_re * divre + _im * divim) / den,
+			(_im * divre - _re * divim) / den);
 	}
+
+	@Override
+	final public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append('(');
+		sb.append(_re);
+		sb.append(',');
+		sb.append(_im);
+		sb.append(')');
+		return sb.toString();
+	}
+	
 }

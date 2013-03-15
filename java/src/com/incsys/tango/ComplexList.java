@@ -43,4 +43,30 @@ public class ComplexList
 		_re[idx] -= v.re();
 		_im[idx] -= v.im();
 	}
+
+	@Override
+	public String toString()
+	{
+		int n = (_re == null) ? 0 : _re.length;
+		String rv = null;
+		if (n > 0)
+		{
+			StringBuilder rvb = new StringBuilder(10*n);
+			rvb.append('[');
+			for(int i=0; i < n; ++i)
+			{
+				if (i > 0) rvb.append(", ");
+				rvb.append('(');
+				rvb.append(_re[i]);
+				rvb.append(',');
+				rvb.append(_im[i]);
+				rvb.append(')');
+			}
+			rvb.append(']');
+			rv = rvb.toString();
+		}
+		return rv;
+	}
+	
+	
 }

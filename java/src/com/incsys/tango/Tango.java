@@ -130,6 +130,7 @@ public class Tango
 		/* the turbine-governor parameters are not looked at anywhere */
 //	    WRITE(6,1028)
 //	    1028  FORMAT('0 TURBINE-GOVERNOR PARAMETERS')
+		wrtr.println("TURBINE-GOVERNOR PARAMETERS");
 		/* READ TURBINE AND GOVERNOR PARAMETERS. */
 		TangoBlock4 b4 = _blks.getBlock4();
 		b4.load(ngen, rdr);
@@ -147,6 +148,7 @@ public class Tango
 				if (j == 8) wrtr.print("\n       ");
 				wrtr.printf("%12.4g", turprm[j][i]);
 			}
+			wrtr.println();
 //40    CONTINUE
 		}
 
@@ -154,7 +156,7 @@ public class Tango
 //1038  FORMAT('0INITIAL GENERATOR TERMINAL CONDITIONS'/
 //	      1T3,'GEN',T15,'MW',T26,'MVAR',T36,'VOLTS',T46,'ANGLE')
 		wrtr.println("INITIAL GENERATOR TERMINAL CONDITIONS");
-		wrtr.println(" GEN         MW          MVAR       VOLTS      ANGLE");
+		wrtr.println("  GEN         MW         MVAR      VOLTS     ANGLE");
 		TangoBlock5 b5 = _blks.getBlock5();
 		ComplexList vt = b5.vt();
 		ComplexList ct = b5.ct();
@@ -166,8 +168,8 @@ public class Tango
 //	        READ(5,1040)   PT,QT,VMAG,VARG
 //1040  	FORMAT(2P2F10.4,0P2F10.4)
 			rdr.nextRec();
-			pt = rdr.getNextFloat();
-			qt = rdr.getNextFloat();
+			pt = rdr.getNextFloat()/100F;
+			qt = rdr.getNextFloat()/100F;
 			vmag = rdr.getNextFloat();
 			varg = rdr.getNextFloat();
 //	        WRITE(6,1045) I,PT,QT,VMAG,VARG

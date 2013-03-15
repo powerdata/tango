@@ -27,7 +27,7 @@ public class Output
 		if (time == 0F)
 		{
 			_wrtr.println("SIMULATED RESPONSES\n");
-			_wrtr.println("   TIME  GEN  ROTOR   ROTOR    EQ     ED    TERM     ELEC-POWER     FIELD   MECH    SATN   AIR GAP");
+			_wrtr.println("   TIME  GEN  ROTOR   ROTOR    EQ'     ED'    TERM     ELEC-POWER     FIELD   MECH    SATN   AIR GAP");
 			_wrtr.println("   SECS   NO  ANGLE   SPEED    VOLTS   VOLTS  VOLTS    REAL   IMAG    VOLTS   POWER  FACTOR   VOLTS\n");
 		}
 //	    WRITE(6,1010) TIME
@@ -39,10 +39,10 @@ public class Output
 		{
 //	        WRITE(6,1000) I,(PRTVAR(I,J),J=1,11)
 //1000  	FORMAT(' ',8X,I3,F8.3,13F8.4)
-			_wrtr.printf("         %3d", i);
+			_wrtr.printf("         %3d", i+1);
 			for(j=0; j < 11; ++j)
 			{
-				_wrtr.printf("%8.4f", prtvar[i][j]);
+				_wrtr.printf("%8.4f  ", prtvar[i][j]);
 			}
 			_wrtr.println();
 //10    CONTINUE
