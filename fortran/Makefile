@@ -24,7 +24,7 @@ $(OBJ) : $(INCSRC)
 
 .PHONY : test
 test: tango
-	tango < examplestudy.dat
+	./tango < examplestudy.dat
 
 .PHONY : clean
 clean:
