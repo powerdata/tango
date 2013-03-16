@@ -36,11 +36,11 @@ public class Nwsol
 		for(i=0; i < ngen; ++i)
 		{
 //	        DEL(I)=OUT(I,2)
-			del[i] = out[i][2];
+			del[i] = out[i][1];
 //	        EQ=OUT(I,3)
-			eq = out[i][3];
+			eq = out[i][2];
 //	        ED=OUT(I,4)
-			ed = out[i][4];
+			ed = out[i][3];
 			/*transform voltage to synchronous reference */
 //	        THETA=DEL(I)-PI/2.0
 			theta = del[i]-(float)Math.PI/2F;
@@ -116,9 +116,9 @@ public class Nwsol
 			for(i=0; i < ngen; ++i)
 			{
 //		    	EQ=OUT(I,3)
-				eq=out[i][3];
+				eq=out[i][2];
 //		    	ED=OUT(I,4)
-				ed=out[i][4];
+				ed=out[i][3];
 				/* TRANSFORM TERMINAL VOLTAGE AND CURRENT TO MACHINE REFERENCE. */
 //		      	THETA=DEL(I)-PI/2.0
 				theta=del[i]-(float)Math.PI/2F;

@@ -12,8 +12,8 @@ public class Avr1
 	public Avr1(CommonBlockSet cblk, int ngen, PrintWriter pw)
 	{
 		_blks = cblk;
-		se = new float[ngen];
-		vref = new float[ngen];
+		se = new float[10];
+		vref = new float[10];
 		wrtr = pw;
 	}
 
@@ -38,16 +38,16 @@ public class Avr1
 //	    VREF(I)=CABS(VT(I))+(KE(I)+SE(I))*EF(I)/KA(I)
 		vref[i]=vt.get(i).abs()+(ke[i]+se[i])*ef[i]/ka[i];
 //	    OUT(I,5)=EF(I)
-		out[i][5]=ef[i];
+		out[i][4]=ef[i];
 //	    OUT(I,6)=EF(I)*(KE(I)+SE(I))
-		out[i][6]=ef[i]*(ke[i]+se[i]);
+		out[i][5]=ef[i]*(ke[i]+se[i]);
 //	    OUT(I,7)=EF(I)*KF(I)/TF(I)
-		out[i][7]=ef[i]*kf[i]/tf[i];
+		out[i][6]=ef[i]*kf[i]/tf[i];
 //	    IF(OUT(I,6) .LT. VRMIN(I)) WRITE(6,1020) I
 //	    IF(OUT(I,6) .GT. VRMAX(I)) WRITE(6,1020)
 //1020  FORMAT('0**** AVR VOLTAGE LIMIT IS EXCEEDED BY INITIAL FIELD ON',
 //	     1' UNIT',I3/)
-		if (out[i][6] < vrmin[i] || out[i][6] > vrmax[i])
+		if (out[i][5] < vrmin[i] || out[i][5] > vrmax[i])
 		{
 			wrtr.println("**** AVR VOLTAGE LIMIT IS EXCEEDED BY INITIAL FIELD ON UNIT"+(i+1));
 		}
@@ -72,8 +72,7 @@ public class Avr1
 		float[][] out = b6.out();
 		float[][] plug = b6.plug();
 
-//	    REAL VREF(10),SE(10)
-		float[] vref=new float[10], se=new float[10];
+//	    REAL VREF(10),SE(10) (handled as class members)
 //	    INTEGER I,J
 		int j;
 //	    REAL X1,X2,X3,X4,X5,X6,X7,X8
@@ -82,11 +81,11 @@ public class Avr1
 		/* ENTER HERE FOR EACH INTEGRATION STEP. */
 		/* DEFINE INTEGRATOR OUTPUTS. */
 //		X5=OUT(I,6)
-		x5=out[i][6];
+		x5=out[i][5];
 //		EF(I)=OUT(I,5)
-		ef[i]=out[i][5];
+		ef[i]=out[i][4];
 //		X3=OUT(I,7)
-		x3=out[i][7];
+		x3=out[i][6];
 		/* CALCULATE INTERMEDIATE VARIABLES */
 //	    X1=VREF(I)-CABS(VT(I))
 		x1=vref[i]-vt.get(i).abs();
@@ -106,11 +105,11 @@ public class Avr1
 		x8=x6-x7;
 		/* DEFINE INTEGRATOR INPUTS. */
 //	    PLUG(I,5)=X8/TE(I)-KE(I)/TE(I)*EF(I)
-		plug[i][5]=x8/te[i]-ke[i]/te[i]*ef[i];
+		plug[i][4]=x8/te[i]-ke[i]/te[i]*ef[i];
 //	    PLUG(I,6)=KA(I)/TA(I)*X4-X5/TA(I)
-		plug[i][6]=ka[i]/ta[i]*x4-x5/ta[i];
+		plug[i][5]=ka[i]/ta[i]*x4-x5/ta[i];
 //	    PLUG(I,7)=X2/TF(I)
-		plug[i][7]=x2/tf[i];
+		plug[i][6]=x2/tf[i];
 
 	}
 }

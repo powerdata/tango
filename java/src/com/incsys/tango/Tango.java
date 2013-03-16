@@ -291,7 +291,6 @@ public class Tango
 //			    NPRINT=NPRINT+1
 				++nprint;
 			}
-			
 		} while (tfin != 0F);
 //	    CALL PLOT
 		new Plot(_blks, rdr, wrtr).plot();

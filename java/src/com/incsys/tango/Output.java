@@ -39,10 +39,10 @@ public class Output
 		{
 //	        WRITE(6,1000) I,(PRTVAR(I,J),J=1,11)
 //1000  	FORMAT(' ',8X,I3,F8.3,13F8.4)
-			_wrtr.printf("         %3d", i+1);
-			for(j=0; j < 11; ++j)
+			_wrtr.printf("         %3d%8.3f", i+1,prtvar[i][0]);
+			for(j=1; j < 11; ++j)
 			{
-				_wrtr.printf("%8.4f  ", prtvar[i][j]);
+				_wrtr.printf("%8.4f", prtvar[i][j]);
 			}
 			_wrtr.println();
 //10    CONTINUE
@@ -58,13 +58,13 @@ public class Output
 //	    TYM(NT)=TIME
 		tym[nt]=time;
 //	    VAR(NT,1)=PRTVAR(1,1)
-		var[nt][1]=prtvar[1][1];
+		var[nt][0]=prtvar[1][0];
 //	    VAR(NT,2)=PRTVAR(1,5)
-		var[nt][2]=prtvar[1][5];
+		var[nt][1]=prtvar[1][4];
 //	    VAR(NT,3)=PRTVAR(1,6)
-		var[nt][3]=prtvar[1][6];
+		var[nt][2]=prtvar[1][5];
 //	    VAR(NT,4)=PRTVAR(1,8)
-		var[nt][4]=prtvar[1][8];
+		var[nt][3]=prtvar[1][7];
 
 	}
 

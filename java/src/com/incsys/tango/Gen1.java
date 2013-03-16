@@ -86,13 +86,13 @@ public class Gen1
 //	    PM(I)=PE
 		pm[i] = pe;
 //	    OUT(I,1)=0.0
-		out[i][1]=0F;
+		out[i][0]=0F;
 //	    OUT(I,2)=DEL
-		out[i][2]=del;
+		out[i][1]=del;
 //	    OUT(I,3)=EQ
-		out[i][3]=eq;
+		out[i][2]=eq;
 //	    OUT(I,4)=ED
-		out[i][4]=ed;
+		out[i][3]=ed;
 	}
 
 	public void gen1(int i)
@@ -136,13 +136,13 @@ public class Gen1
 		/* ENTER HERE FOR EACH INTEGRATION STEP. */
 		/* DEFINE INTEGRATOR OUTPUTS. */
 //		OME=OUT(I,1)
-		ome=out[i][1];
+		ome=out[i][0];
 //		DEL=OUT(I,2)
-		del=out[i][2];
+		del=out[i][1];
 //		EQ=OUT(I,3)
-		eq=out[i][3];
+		eq=out[i][2];
 //		ED=OUT(I,4)
-		ed=out[i][4];
+		ed=out[i][3];
 		
 		/* TRANSFORM CURRENT TO MACHINE REFERENCE. */
 //	    CURR=CT(I)*CMPLX(SIN(DEL),COS(DEL))
@@ -183,34 +183,34 @@ public class Gen1
 		/* DEFINE INTEGRATOR INPUTS. */
 		/* SET UP PRINTOUT VARIABLES. */
 //		PLUG(I,1)=(PM(I)-PE-PL-DAMP(I)*OME)/(2.0*H(I))
-		plug[i][1]=(pm[i]-pe-pl-damp[i]*ome)/(2F*h[i]);
+		plug[i][0]=(pm[i]-pe-pl-damp[i]*ome)/(2F*h[i]);
 //		PLUG(I,2)=377.0*OME
-		plug[i][2]=377F*ome;
+		plug[i][1]=377F*ome;
 //		PLUG(I,3)=(CSAT(I)*EF(I)-EQ-(XDS-XD1(I))*ID)/TD1S
-		plug[i][3]=(csat[i]*ef[i]-eq-(xds-xd1[i])*id)/td1s;
+		plug[i][2]=(csat[i]*ef[i]-eq-(xds-xd1[i])*id)/td1s;
 //		PLUG(I,4)=(-ED+(XQS -XQ1(I))*IQ)/TQ1S
-		plug[i][4]=(-ed+(xqs-xq1[i])*iq)/tq1s;
+		plug[i][3]=(-ed+(xqs-xq1[i])*iq)/tq1s;
 //		PRTVAR(I,1)=DEL*180.0/PI
-		prtvar[i][1]=del*(float)(180.0/Math.PI);
+		prtvar[i][0]=del*(float)(180.0/Math.PI);
 //		PRTVAR(I,2)=OME
-		prtvar[i][2]=ome;
+		prtvar[i][1]=ome;
 //		PRTVAR(I,3)=EQ
-		prtvar[i][3]=eq;
+		prtvar[i][2]=eq;
 //		PRTVAR(I,4)=ED
-		prtvar[i][4]=ed;
+		prtvar[i][3]=ed;
 //		PRTVAR(I,5)=CABS(VT(I))
-		prtvar[i][5]=vt.get(i).abs();
+		prtvar[i][4]=vt.get(i).abs();
 //		PRTVAR(I,6)=PE*100.0/PBASE(I)
-		prtvar[i][6]=pe*100F/pbase[i];
+		prtvar[i][5]=pe*100F/pbase[i];
 //		PRTVAR(I,7)=QE*100.0/PBASE(I)
-		prtvar[i][7]=qe*100F/pbase[i];
+		prtvar[i][6]=qe*100F/pbase[i];
 //		PRTVAR(I,8)=EF(I)
-		prtvar[i][8]=ef[i];
+		prtvar[i][7]=ef[i];
 //		PRTVAR(I,9)=PM(I)*100.0/PBASE(I)
-		prtvar[i][9]=pm[i]*100F/pbase[i];
+		prtvar[i][8]=pm[i]*100F/pbase[i];
 //		PRTVAR(I,10)=CSAT(I)
-		prtvar[i][10]=csat[i];
+		prtvar[i][9]=csat[i];
 //		PRTVAR(I,11)=EAT
-		prtvar[i][11]=eat;
+		prtvar[i][10]=eat;
 	}
 }
