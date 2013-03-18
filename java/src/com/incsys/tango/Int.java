@@ -3,24 +3,19 @@ package com.incsys.tango;
 
 public class Int
 {
-	protected CommonBlockSet _cblk;
+	protected CommonBlock _cb;
 	
-	public Int(CommonBlockSet cblk)
+	public Int(CommonBlock cblk)
 	{
-		_cblk = cblk;
+		_cb = cblk;
 	}
 	public void integrate(int ngen)
 	{
-		TangoBlock1 b1 = _cblk.getBlock1();
-		TangoBlock6 b6 = _cblk.getBlock6();
-		float[][] save = b6.save();
-		float[][] plug = b6.plug();
-		float[][] out = b6.out();
 //      INTEGER I,J,NGEN,NFLAG
 		int i, j, nflag;
 		
 //      IF(TIME .EQ. 0.0) GO TO 20
-		if (b1.time() != 0F)
+		if (_cb.time != 0F)
 		{
 //     		DO 10 I=1,NGEN
 			for (i=0; i < ngen; ++i)
@@ -28,7 +23,7 @@ public class Int
 //		      	DO 10 J=1,16
 				for (j=0; j < 16; ++j)
 				{
-					save[i][j] = plug[i][j];
+					_cb.save[i][j] = _cb.plug[i][j];
 				}
 			}
 		}
@@ -42,9 +37,9 @@ public class Int
 			for(j=0; j < 16; ++j)
 			{
 //			    OUT(I,J)=OUT(I,J)+PLUG(I,J)*TSTEP+(PLUG(I,J)-SAVE(I,J))*0.5*TSTEP
-				out[i][j] += plug[i][j]*b1.tstep()+(plug[i][j]-save[i][j])*0.5F*b1.tstep();
+				_cb.out[i][j] += _cb.plug[i][j]*_cb.tstep+(_cb.plug[i][j]-_cb.save[i][j])*0.5F*_cb.tstep;
 //30			SAVE(I,J)=PLUG(I,J)
-				save[i][j] = plug[i][j];
+				_cb.save[i][j] = _cb.plug[i][j];
 			}
 		}
 	}

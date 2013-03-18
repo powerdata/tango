@@ -4,12 +4,12 @@ import java.io.PrintWriter;
 
 public class Matrix
 {
-	protected CommonBlockSet _cblk;
+	protected CommonBlock _cb;
 	protected PrintWriter _wrtr;
 	
-	public Matrix(CommonBlockSet cblk, PrintWriter wrtr)
+	public Matrix(CommonBlock cblk, PrintWriter wrtr)
 	{
-		_cblk = cblk;
+		_cb = cblk;
 		_wrtr = wrtr;
 	}
 	public void matrix(int ngen)
@@ -25,12 +25,7 @@ public class Matrix
 //	    N1=NGEN+1
 		n1=ngen;
 
-		ComplexList[] y = _cblk.getBlock7().getYMatrix();
-		TangoBlock2 b2 = _cblk.getBlock2();
-		float[] r = b2.r();
-		float[] xd1 = b2.xd1();
-		float[] xq1 = b2.xq1();
-		
+		ComplexList[] y = _cb.y;
 //	    DO 80 I=1,NGEN
 		for(i=0; i<ngen; ++i)
 		{
@@ -56,7 +51,7 @@ public class Matrix
 			}
 			/* ADD IN GENERATOR BUS */
 //	    	YFICT=CMPLX(R(I),-(XD1(I)+XQ1(I))/2.0)/(R(I)*R(I)+XD1(I)*XQ1(I))
-			yfict=new Complex(r[i],-(xd1[i]+xq1[i])/2F).divide(r[i]*r[i]+xd1[i]*xq1[i]);
+			yfict=new Complex(_cb.r[i],-(_cb.xd1[i]+_cb.xq1[i])/2F).divide(_cb.r[i]*_cb.r[i]+_cb.xd1[i]*_cb.xq1[i]);
 //	    	Y(I,I)=YFICT
 			y[i].set(i, yfict);
 			/* CHECK IF TERMINAL BUS IS GROUNDED. */

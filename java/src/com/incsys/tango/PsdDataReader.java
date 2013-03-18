@@ -2,24 +2,27 @@ package com.incsys.tango;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class PsdDataReader
 {
 	protected static Pattern _WS = Pattern.compile("\\S+");
-	BufferedReader _in;
+	LineNumberReader _in;
+	int lno;
 	Matcher _m;
 	String _l;
 	
 	public PsdDataReader(BufferedReader in) throws IOException
 	{
-		_in = in;
+		_in = new LineNumberReader(in);
 	}
 
-	public boolean nextRec() throws IOException
+	public boolean nextLine() throws IOException
 	{
 		_l = _in.readLine();
+		lno = _in.getLineNumber();
 		if (_l == null) return true;
 		_m = null;
 		return false;
@@ -41,32 +44,31 @@ class PsdDataReader
 		return Float.parseFloat(getNextString().trim());
 	}
 
-	public void loadArray(float[][] block, int slofs, int sllen, int ofs) throws IOException
+	public void readArrays(int i, int maxLineVals, int narray, float[][] arrays)
+		throws IOException
 	{
-		if (nextRec()) return;
-		for (int i=0; i < sllen; ++i, ++slofs)
+		int nlines = (int) Math.ceil((float) narray / (float)maxLineVals);
+		int ia=0;
+		for (int il = 0; il < nlines; ++il)
 		{
-			String s = getNextString();
-			if (s == null || slofs >= block.length) return;
-			block[slofs][ofs] = Float.parseFloat(s);
+			if (!nextLine())
+			{
+				for (;ia < narray; ++ia)
+				{
+					String s = getNextString();
+					if (s == null) break;
+					arrays[ia][i] = Float.parseFloat(s);
+				}
+			}
 		}
 	}
 	
-	public void loadComplexList(ComplexList l, int start, int length) throws IOException
+	public void readArrayBlock(int i, int maxLineVals, int narray,
+		float[]... arrays) throws IOException
 	{
-		if (nextRec()) return;
-		float[] lre = l.re();
-		float[] lim = l.im();
-		for (int i=0; i < length; ++i, ++start)
-		{
-			String sre = getNextString();
-			if (sre == null) return;
-			String sim = getNextString();
-			lre[start] = Float.parseFloat(sre);
-			lim[start] = Float.parseFloat(sim);
-		}
+		readArrays(i, maxLineVals, narray, arrays);
 	}
-
+	
 	public String readChars(int i)
 	{
 		int start = (_m == null) ? 0 : _m.end();

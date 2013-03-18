@@ -6,13 +6,13 @@ import java.util.Arrays;
 
 public class Plot
 {
-	protected CommonBlockSet _cblk;
+	protected CommonBlock _cb;
 	protected PrintWriter _wrtr;
 	protected PsdDataReader _rdr;
 	
-	public Plot(CommonBlockSet cblk, PsdDataReader rdr, PrintWriter wrtr)
+	public Plot(CommonBlock cblk, PsdDataReader rdr, PrintWriter wrtr)
 	{
-		_cblk = cblk;
+		_cb = cblk;
 		_wrtr = wrtr;
 		_rdr = rdr;
 	}
@@ -39,27 +39,23 @@ public class Plot
 		for(i=0; i<6; ++i)
 		{
 //	    	IF(I .EQ. 7) GO TO 5
-			if(_rdr.nextRec()) break;
+			if(_rdr.nextLine()) break;
 //3     	READ(5,1000,END=5) (NAME(I,J),J=1,40),VMIN(I),VMAX(I)
 //1000  	FORMAT(40A1,F10.5,F10.5)
 			name[i] = _rdr.readChars(40);
 			vmin[i] = _rdr.getNextFloat();
 			vmax[i] = _rdr.getNextFloat();
 		}
-		TangoBlock8 b8 = _cblk.getBlock8();
-		float[] tym = b8.tym();
-		float[][] var = b8.var();
 //5     NVAR=I-1
-		int nvar = i;
-		b8.setNvar(nvar);
+		_cb.nvar = i;
 //		IF(NVAR .EQ. 0) RETURN
-		if (b8.nvar() == 0) return;
+		if (_cb.nvar == 0) return;
 //		WRITE(6,1060)
 //1060  FORMAT('1')
 		_wrtr.println();
 		/* WRITE HEADINGS FOR EACH GRAPH. */
 //	    DO 20 I=1,NVAR
-		for(i=0; i<nvar; ++i)
+		for(i=0; i<_cb.nvar; ++i)
 		{
 //	    	RANGE=VMAX(I)-VMIN(I)
 			range=vmax[i]-vmin[i];
@@ -93,9 +89,8 @@ public class Plot
 		for(loc=0; loc<101; ++loc) _wrtr.print(plus);
 		_wrtr.println();
 		/* PLOT GRAPHS. */
-		float nt = b8.nt();
 //	    DO 50 J=1,NT
-		for(j=0; j<nt; ++j)
+		for(j=0; j<_cb.nt; ++j)
 		{
 //	    	DO 28 LOC=1,101
 //28    	ALINE(LOC)=BLANK
@@ -114,10 +109,10 @@ public class Plot
 			}
 			/* INCLUDE GRAPH POINTS. */
 //	      	DO 35 I=1,NVAR
-			for(i=0; i < nvar; ++i)
+			for(i=0; i < _cb.nvar; ++i)
 			{
 //	      		LOC=(VAR(J,I)-VMIN(I))/(VMAX(I)-VMIN(I))*100.0+1.0
-				loc=(int) ((var[j][i]-vmin[i])/(vmax[i]-vmin[i])*100);
+				loc=(int) ((_cb.var[j][i]-vmin[i])/(vmax[i]-vmin[i])*100);
 //	      		IF(LOC .LT. 1) LOC=1
 				if (loc < 0) loc = 0;
 //	      		IF(LOC .GT. 101) LOC=101
@@ -130,7 +125,7 @@ public class Plot
 //			1040  FORMAT(T4,F7.3,1X,101A1)
 			if(j%10 == 0)
 			{
-				_wrtr.printf("   %7.3f ", tym[j]);
+				_wrtr.printf("   %7.3f ", _cb.tym[j]);
 			}
 //		    IF(MOD(J,10) .NE. 1) WRITE(6,1045) (ALINE(LOC),LOC=1,101)
 //1045  	FORMAT(T12,101A1)
