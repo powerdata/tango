@@ -96,6 +96,7 @@ public class Nwsol
 					cti = cti.add(y[i].get(j).multiply(efict.get(j)));
 				}
 				ct.set(i,cti);
+//				CT SET HERE 1
 //	        30CONTINUE
 			}
 

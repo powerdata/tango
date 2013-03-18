@@ -64,7 +64,7 @@ public class Plot
 //	    	RANGE=VMAX(I)-VMIN(I)
 			range=vmax[i]-vmin[i];
 //	    	LOG=ALOG10(RANGE)
-			log=Math.round((float)Math.log10(range));
+			log=(int)Math.log10(range);
 //	    	SCALE=1.0*10.0**LOG
 			scale=1F*(float)Math.pow(10F, log);
 //	    	DO 10 J=1,11
@@ -75,21 +75,21 @@ public class Plot
 			}
 //	      	WRITE(6,1010) SYMBOL(I),(NAME(I,J),J=1,40),SCALE
 //1010  	FORMAT('0',T12,A1,' - ',40A1,T93,'SCALE FACTOR = ',1PE7.1)
-			_wrtr.printf("\n             %c = %40s  SCALE FACTOR = %7.1e",
+			_wrtr.printf("\n           %c - %-75s  SCALE FACTOR = %7.1e",
 				symbol[i], name[i], scale);
 //	        WRITE(6,1020) (YVAL(J),J=1,11)
 //1020  	FORMAT(' ',T10,11(F5.2,5X))
-			_wrtr.printf("\n          ");
+			_wrtr.printf("\n         ");
 			for(j=0; j<11; ++j)
 			{
-				_wrtr.printf("%5.2f", yval[j]);
+				_wrtr.printf("%5.2f     ", yval[j]);
 			}
 //20    CONTINUE
 		}
 		/* WRITE Y AXIS. */
 //	    WRITE(6,1030) (PLUS,LOC=1,101)
 //1030  FORMAT('0    TIME  ',101A1)
-		_wrtr.print("\n0    TIME  ");
+		_wrtr.print("\n     TIME  ");
 		for(loc=0; loc<101; ++loc) _wrtr.print(plus);
 		_wrtr.println();
 		/* PLOT GRAPHS. */
@@ -117,9 +117,9 @@ public class Plot
 			for(i=0; i < nvar; ++i)
 			{
 //	      		LOC=(VAR(J,I)-VMIN(I))/(VMAX(I)-VMIN(I))*100.0+1.0
-				loc=Math.round((var[j][i]-vmin[i])/(vmax[i]-vmin[i])*100F+1F);
+				loc=(int) ((var[j][i]-vmin[i])/(vmax[i]-vmin[i])*100);
 //	      		IF(LOC .LT. 1) LOC=1
-				if (loc < 1) loc = 1;
+				if (loc < 0) loc = 0;
 //	      		IF(LOC .GT. 101) LOC=101
 				if (loc > 100) loc=100;
 //	      		ALINE(LOC)=SYMBOL(I)

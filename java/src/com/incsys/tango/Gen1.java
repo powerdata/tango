@@ -8,7 +8,7 @@ public class Gen1
 	CommonBlockSet _cblk;
 	PrintWriter _wrtr;
 	float[] csat;
-
+	
 	public Gen1(CommonBlockSet cblk, int ngen, PrintWriter wrtr)
 	{
 		_cblk = cblk;
