@@ -168,8 +168,8 @@ public class Tango
 //	        READ(5,1040)   PT,QT,VMAG,VARG
 //1040  	FORMAT(2P2F10.4,0P2F10.4)
 			rdr.nextRec();
-			pt = rdr.getNextFloat()/100F;
-			qt = rdr.getNextFloat()/100F;
+			pt = rdr.getNextFloat();
+			qt = rdr.getNextFloat();
 			vmag = rdr.getNextFloat();
 			varg = rdr.getNextFloat();
 //	        WRITE(6,1045) I,PT,QT,VMAG,VARG
@@ -177,10 +177,13 @@ public class Tango
 			wrtr.printf(" %5d     %10.4f%10.4f%10.5f%10.5f\n", i+1, pt, qt, vmag, varg);
 //		    VARG=VARG*PI/180.0
 			varg *= Deg2Rad;
+			pt /= 100F;
+			qt /= 100F;
 //		    VT(I)=VMAG*CMPLX(COS(VARG),SIN(VARG))
 			vt.set(i, new Complex((float)Math.cos(varg),(float)Math.sin(varg)).multiply(vmag));
 //		    CT(I)=CONJG(CMPLX(PT,QT)/VT(I))
 			ct.set(i, new Complex(pt,qt).divide(vt.get(i)).conjugate());
+//			CT SET HERE 2
 //50    CONTINUE
 		}
 		

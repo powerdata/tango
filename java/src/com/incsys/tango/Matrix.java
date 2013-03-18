@@ -76,7 +76,7 @@ public class Matrix
 				for(n=m; n < ngen; ++n)
 				{
 //	    	        Y(M,N)=Y(M,N)-Y(M,N1)*Y(N1,N)/Y(N1,N1)
-					y[m].subtract(n, y[m].get(n1).multiply(y[n1].get(n)).divide(y[n1].get(n1)));
+					y[m].subtract(n, y[m].get(n1).multiply(y[n1].get(n).divide(y[n1].get(n1))));
 //	    	        Y(N,M)=Y(M,N)
 					y[n].set(m, y[m].get(n));
 //	    		76CONTINUE

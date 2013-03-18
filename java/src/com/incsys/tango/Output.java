@@ -53,19 +53,18 @@ public class Output
 		float[][] var = b8.var();
 		/* SET UP THE VARIABLES TO BE PLOTTED. */
 //	    NT=NT+1
-		int nt = b8.nt()+1;
-		b8.setNt(nt);
+		int nt = b8.nt();
 //	    TYM(NT)=TIME
 		tym[nt]=time;
 //	    VAR(NT,1)=PRTVAR(1,1)
-		var[nt][0]=prtvar[1][0];
+		var[nt][0]=prtvar[0][0];
 //	    VAR(NT,2)=PRTVAR(1,5)
-		var[nt][1]=prtvar[1][4];
+		var[nt][1]=prtvar[0][4];
 //	    VAR(NT,3)=PRTVAR(1,6)
-		var[nt][2]=prtvar[1][5];
+		var[nt][2]=prtvar[0][5];
 //	    VAR(NT,4)=PRTVAR(1,8)
-		var[nt][3]=prtvar[1][7];
-
+		var[nt][3]=prtvar[0][7];
+		b8.setNt(nt+1);
 	}
 
 
