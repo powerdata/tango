@@ -43,7 +43,7 @@ public class Nwsol
 //	        THETA=DEL(I)-PI/2.0
 			theta = del[i]-(float)Math.PI/2F;
 //	        E(I)=CMPLX(ED,EQ)*CMPLX(COS(THETA),SIN(THETA))
-			e.set(i, new Complex(ed,eq).multiply((float)Math.cos(theta), (float)Math.sin(theta)));
+			e.set(i, new Complex(ed,eq).mult((float)Math.cos(theta), (float)Math.sin(theta)));
 //	    10CONTINUE
 		}
 
@@ -61,11 +61,11 @@ public class Nwsol
 //		    	THETA=DEL(I)-PI/2.0
 				theta=del[i]-(float)Math.PI/2F;
 //		    	SCALE=CMPLX(0.0,(XQ1(I)-XD1(I))*0.5)/CMPLX(R(I),-(XQ1(I)+XD1(I))*0.5)
-				scale=new Complex(0F,(_cb.xq1[i]-_cb.xd1[i])*.5F).divide(_cb.r[i], -(_cb.xq1[i]+_cb.xd1[i])*0.5F);
+				scale=new Complex(0F,(_cb.xq1[i]-_cb.xd1[i])*.5F).div(_cb.r[i], -(_cb.xq1[i]+_cb.xd1[i])*0.5F);
 //		    	ROTATE=CMPLX(COS(2.0*THETA),SIN(2.0*THETA))
 				rotate=new Complex((float)Math.cos(2F*theta), (float)Math.sin(2F*theta));
 //		    	EFICT(I)=E(I)+SCALE*CONJG(E(I)-VT(I))*ROTATE
-				efict.set(i, e.get(i).add(scale.multiply(e.get(i).subtract(_cb.vt.get(i)).conjugate()).multiply(rotate)));
+				efict.set(i, e.get(i).add(scale.mult(e.get(i).sub(_cb.vt.get(i)).conjg()).mult(rotate)));
 //		    20CONTINUE
 			}
 			
@@ -78,7 +78,7 @@ public class Nwsol
 				for(j=0; j<ngen; ++j)
 				{
 //		            25 CT(I)=CT(I)+Y(I,J)*EFICT(J)
-					cti = cti.add(_cb.y[i].get(j).multiply(efict.get(j)));
+					cti = cti.add(_cb.y[i].get(j).mult(efict.get(j)));
 				}
 				_cb.ct.set(i,cti);
 //				CT SET HERE 1
@@ -89,9 +89,9 @@ public class Nwsol
 			for(i=0; i < ngen; ++i)
 			{
 //		    	YFICT=CMPLX(R(I),-(XD1(I)+XQ1(I))/2.0)/(R(I)*R(I)+XD1(I)*XQ1(I))
-				yfict=new Complex(_cb.r[i],-(_cb.xd1[i]+_cb.xq1[i])/2F).divide(_cb.r[i]*_cb.r[i]+_cb.xd1[i]*_cb.xq1[i]);
+				yfict=new Complex(_cb.r[i],-(_cb.xd1[i]+_cb.xq1[i])/2F).div(_cb.r[i]*_cb.r[i]+_cb.xd1[i]*_cb.xq1[i]);
 //		        VT(I)=EFICT(I)-CT(I)/YFICT
-				_cb.vt.set(i, efict.get(i).subtract(_cb.ct.get(i).divide(yfict)));
+				_cb.vt.set(i, efict.get(i).sub(_cb.ct.get(i).div(yfict)));
 			}
 //		    40CONTINUE
 			
@@ -111,13 +111,13 @@ public class Nwsol
 //		      	ROTATE=CMPLX(COS(THETA),-SIN(THETA))
 				rotate=new Complex((float)Math.cos(theta), -(float)Math.sin(theta));
 //		      	ID=REAL(CT(I)*ROTATE)
-				id=_cb.ct.get(i).multiply(rotate).re();
+				id=_cb.ct.get(i).mult(rotate).re();
 //		      	IQ=AIMAG(CT(I)*ROTATE)
-				iq=_cb.ct.get(i).multiply(rotate).im();
+				iq=_cb.ct.get(i).mult(rotate).im();
 //		      	VD=REAL(VT(I)*ROTATE)
-				vd=_cb.vt.get(i).multiply(rotate).re();
+				vd=_cb.vt.get(i).mult(rotate).re();
 //		      	VQ=AIMAG(VT(I)*ROTATE)
-				vq=_cb.vt.get(i).multiply(rotate).im();
+				vq=_cb.vt.get(i).mult(rotate).im();
 //		      	IF(ABS(EQ-R(I)*IQ-XD1(I)*ID-VQ) .GT. .001) NFLAG=1
 //		      	IF(ABS(ED-R(I)*ID+XQ1(I)*IQ-VD) .GT. .001) NFLAG=1
 				if(Math.abs(eq-_cb.r[i]*iq-_cb.xd1[i]*id-vq) > .001F ||

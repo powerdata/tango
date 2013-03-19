@@ -38,12 +38,12 @@ public class Gen1
 			xqs=(_cb.xq1[i] == _cb.xq[i]) ? _cb.xq[i] : csat[i]*_cb.xq[i]+(1F-csat[i])*_cb.xl[i];
 			/* CALCULATE ANGLE OF GENERATOR Q AXIS. */
 //	        EQD=VT(I)+CMPLX(R(I),XQS)*CT(I)
-			eqd=_cb.vt.get(i).add(_cb.ct.get(i).multiply(_cb.r[i], xqs));
+			eqd=_cb.vt.get(i).add(_cb.ct.get(i).mult(_cb.r[i], xqs));
 //	        DEL=ATAN2(AIMAG(EQD),REAL(EQD))
 			del=(float)Math.atan2(eqd.im(), eqd.re());
 			/* TRANSFORM CURRENT ONTO GENERATOR REFERENCE. */
 //	        CURR=CT(I)*CMPLX(SIN(DEL),COS(DEL))
-			curr=_cb.ct.get(i).multiply((float)Math.sin(del),(float)Math.cos(del));
+			curr=_cb.ct.get(i).mult((float)Math.sin(del),(float)Math.cos(del));
 //	        ID=REAL(CURR)
 			id=curr.re();
 //	        IQ=AIMAG(CURR)
@@ -67,7 +67,7 @@ public class Gen1
 		}
 
 //	    PE=REAL(VT(I)*CONJG(CT(I)))+CABS(CURR)**2*R(I)
-		pe=_cb.vt.get(i).multiply(_cb.ct.get(i).conjugate()).re()+(float)Math.pow(curr.abs(), 2D)*_cb.r[i];
+		pe=_cb.vt.get(i).mult(_cb.ct.get(i).conjg()).re()+(float)Math.pow(curr.abs(), 2D)*_cb.r[i];
 //	    PM(I)=PE
 		_cb.pm[i] = pe;
 //	    OUT(I,1)=0.0
@@ -107,7 +107,7 @@ public class Gen1
 		
 		/* TRANSFORM CURRENT TO MACHINE REFERENCE. */
 //	    CURR=CT(I)*CMPLX(SIN(DEL),COS(DEL))
-		curr=_cb.ct.get(i).multiply((float)Math.sin(del), (float)Math.cos(del));
+		curr=_cb.ct.get(i).mult((float)Math.sin(del), (float)Math.cos(del));
 //	    ID=REAL(CURR)
 		id=curr.re();
 //	    IQ=AIMAG(CURR)
@@ -115,9 +115,9 @@ public class Gen1
 		
 		/* CALCULATE GENERATOR OUTPUT PLUS LOSSES. */
 //	    PE=REAL(VT(I)*CONJG(CT(I)))
-		pe=_cb.vt.get(i).multiply(_cb.ct.get(i).conjugate()).re();
+		pe=_cb.vt.get(i).mult(_cb.ct.get(i).conjg()).re();
 //	    QE=AIMAG(VT(I)*CONJG(CT(I)))
-		qe=_cb.vt.get(i).multiply(_cb.ct.get(i).conjugate()).im();
+		qe=_cb.vt.get(i).mult(_cb.ct.get(i).conjg()).im();
 //	    PL=CABS(CURR)**2*R(I)
 		pl=(float)Math.pow(curr.abs(), 2)*_cb.r[i];
 

@@ -51,7 +51,7 @@ public class Matrix
 			}
 			/* ADD IN GENERATOR BUS */
 //	    	YFICT=CMPLX(R(I),-(XD1(I)+XQ1(I))/2.0)/(R(I)*R(I)+XD1(I)*XQ1(I))
-			yfict=new Complex(_cb.r[i],-(_cb.xd1[i]+_cb.xq1[i])/2F).divide(_cb.r[i]*_cb.r[i]+_cb.xd1[i]*_cb.xq1[i]);
+			yfict=new Complex(_cb.r[i],-(_cb.xd1[i]+_cb.xq1[i])/2F).div(_cb.r[i]*_cb.r[i]+_cb.xd1[i]*_cb.xq1[i]);
 //	    	Y(I,I)=YFICT
 			y[i].set(i, yfict);
 			/* CHECK IF TERMINAL BUS IS GROUNDED. */
@@ -60,9 +60,9 @@ public class Matrix
 //	    	Y(N1,N1)=Y(N1,N1)+YFICT
 			y[n1].add(n1, yfict);
 //	    	Y(I,N1)=-YFICT
-			y[i].set(n1, yfict.multiply(-1));
+			y[i].set(n1, yfict.mult(-1));
 //	    	Y(N1,I)=-YFICT
-			y[n1].set(i, yfict.multiply(-1));
+			y[n1].set(i, yfict.mult(-1));
 			/* ELIMINATE THE TERMINAL BUS. */
 //	    	DO 76 M=1,NGEN
 			for(m=0; m < ngen; ++m)
@@ -71,7 +71,7 @@ public class Matrix
 				for(n=m; n < ngen; ++n)
 				{
 //	    	        Y(M,N)=Y(M,N)-Y(M,N1)*Y(N1,N)/Y(N1,N1)
-					y[m].subtract(n, y[m].get(n1).multiply(y[n1].get(n).divide(y[n1].get(n1))));
+					y[m].subtract(n, y[m].get(n1).mult(y[n1].get(n).div(y[n1].get(n1))));
 //	    	        Y(N,M)=Y(M,N)
 					y[n].set(m, y[m].get(n));
 //	    		76CONTINUE

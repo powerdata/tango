@@ -170,9 +170,9 @@ public class Tango
 			pt /= 100F;
 			qt /= 100F;
 //		    VT(I)=VMAG*CMPLX(COS(VARG),SIN(VARG))
-			_cb.vt.set(i, new Complex((float)Math.cos(varg),(float)Math.sin(varg)).multiply(vmag));
+			_cb.vt.set(i, new Complex((float)Math.cos(varg),(float)Math.sin(varg)).mult(vmag));
 //		    CT(I)=CONJG(CMPLX(PT,QT)/VT(I))
-			_cb.ct.set(i, new Complex(pt,qt).divide(_cb.vt.get(i)).conjugate());
+			_cb.ct.set(i, new Complex(pt,qt).div(_cb.vt.get(i)).conjg());
 //			CT SET HERE 2
 //50    CONTINUE
 		}
