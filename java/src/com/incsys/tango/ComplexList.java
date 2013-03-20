@@ -38,7 +38,7 @@ public class ComplexList
 		_im[idx] += v.im();
 	}
 
-	public void subtract(int idx, Complex v)
+	public void sub(int idx, Complex v)
 	{
 		_re[idx] -= v.re();
 		_im[idx] -= v.im();
