@@ -1,3 +1,6 @@
 [submodule "src/com/powerdata/mdleng/transmission/csvimp"]
 	path = src/com/powerdata/mdleng/transmission/csvimp
 	url = git@github.com:powerdata/com.powerdata.mdleng.transmission.csvimp
+[submodule "java/com/powerdata/mdleng/transmission/csvimp"]
+	path = java/com/powerdata/mdleng/transmission/csvimp
+	url = git@github.com:powerdata/com.powerdata.mdleng.transmission.csvimp.git
