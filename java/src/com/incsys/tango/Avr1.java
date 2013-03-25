@@ -12,8 +12,8 @@ public class Avr1
 	public Avr1(CommonBlock cblk, int ngen, PrintWriter pw)
 	{
 		_cb = cblk;
-		se = new float[10];
-		vref = new float[10];
+		se = new float[_cb.maxGen];
+		vref = new float[_cb.maxGen];
 		wrtr = pw;
 	}
 

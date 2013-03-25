@@ -57,7 +57,8 @@ class PsdDataReader
 				{
 					String s = getNextString();
 					if (s == null) break;
-					arrays[ia][i] = Float.parseFloat(s);
+					if (arrays != null)
+						arrays[ia][i] = Float.parseFloat(s);
 				}
 			}
 		}

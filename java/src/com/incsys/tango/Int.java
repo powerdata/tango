@@ -21,7 +21,7 @@ public class Int
 			for (i=0; i < ngen; ++i)
 			{
 //		      	DO 10 J=1,16
-				for (j=0; j < 16; ++j)
+				for (j=0; j < CommonBlock.GenMaxAttrib; ++j)
 				{
 					_cb.save[i][j] = _cb.plug[i][j];
 				}
@@ -34,7 +34,7 @@ public class Int
 		for (i=0; i < ngen; ++i)
 		{
 //		    DO 30 J=1,16
-			for(j=0; j < 16; ++j)
+			for(j=0; j < CommonBlock.GenMaxAttrib; ++j)
 			{
 //			    OUT(I,J)=OUT(I,J)+PLUG(I,J)*TSTEP+(PLUG(I,J)-SAVE(I,J))*0.5*TSTEP
 				_cb.out[i][j] += _cb.plug[i][j]*_cb.tstep+(_cb.plug[i][j]-_cb.save[i][j])*0.5F*_cb.tstep;

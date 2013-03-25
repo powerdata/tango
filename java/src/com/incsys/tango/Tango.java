@@ -16,7 +16,7 @@ public class Tango
 	public static final float HalfPI = (float)Math.PI/2F;
 	public static final float Deg2Rad = (float)Math.PI/180F;
 	
-	protected CommonBlock _cb = new CommonBlock();
+	protected CommonBlock _cb = new CommonBlock(10);
 
 	public void runTango(PsdDataReader rdr, PrintWriter wrtr) throws IOException
 	{
@@ -109,11 +109,11 @@ public class Tango
 		{
 //	    	READ(5,1020) (AVRPRM(I,J),J=1,16)
 //	1020  	FORMAT(8F10.4)
-			rdr.readArrays(i, 8, 16, _cb.avrprm);
+			rdr.readArrays(i, 8, CommonBlock.GenMaxAttrib, _cb.avrprm);
 //	      	WRITE(6,1025) I,(AVRPRM(I,J),J=1,16)
 //	1025  	FORMAT(1X,I5,8G12.4/6X,8G12.4)
 			wrtr.printf(" %5d ", i+1);
-			for (j=0; j < 16; ++j)
+			for (j=0; j < CommonBlock.GenMaxAttrib; ++j)
 			{
 				if (j == 8) wrtr.print("\n       ");
 				wrtr.printf("%12.4g", _cb.avrprm[j][i]);
@@ -122,28 +122,24 @@ public class Tango
 //		30   CONTINUE
 		}
 
-		/* the turbine-governor parameters are not looked at anywhere */
-//	    WRITE(6,1028)
+		/*
+		 * Turbine parameters not ever seen in this code, so are read only to
+		 * preserve input stream order
+		 */
+		//	    WRITE(6,1028)
 //	    1028  FORMAT('0 TURBINE-GOVERNOR PARAMETERS')
-		wrtr.println("TURBINE-GOVERNOR PARAMETERS");
+//		wrtr.println("TURBINE-GOVERNOR PARAMETERS");
 		/* READ TURBINE AND GOVERNOR PARAMETERS. */
 //	    DO 40 I=1,NGEN
 		for(i=0; i < ngen; ++i)
-		{
+        {
 //	    	READ(5,1030) (TURPRM(I,J),J=1,16)
 //1030  	FORMAT(8F10.4)
-			rdr.readArrays(i, 8, 16, _cb.turprm);
+			rdr.readArrays(i, 8, CommonBlock.GenMaxAttrib, null);
 //	        WRITE(6,1035) I,(TURPRM(I,J),J=1,16)
 //1035  	FORMAT(1X,I5,8G12.4/6X,8G12.4)
-			wrtr.printf(" %5d ", i+1);
-			for(j=0; j<16; j++)
-			{
-				if (j == 8) wrtr.print("\n       ");
-				wrtr.printf("%12.4g", _cb.turprm[j][i]);
-			}
-			wrtr.println();
 //40    CONTINUE
-		}
+        }
 
 //	    WRITE(6,1038)
 //1038  FORMAT('0INITIAL GENERATOR TERMINAL CONDITIONS'/

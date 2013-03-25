@@ -23,9 +23,9 @@ public class Nwsol
 //	    COMPLEX VOLD,YFICT
 		Complex vold, yfict;
 //	    COMPLEX EFICT(10),E(10)
-		ComplexList efict = new ComplexList(10), e = new ComplexList(10);
+		ComplexList efict = new ComplexList(_cb.maxGen), e = new ComplexList(_cb.maxGen);
 //	    REAL DEL(10)
-		float[] del = new float[10];
+		float[] del = new float[_cb.maxGen];
 //	    INTEGER NGEN,I,J,ITER,NFLAG
 		int i, j, iter, nflag;
 //	    REAL ED,EQ,THETA,VD,VD1,VQ,VQ1
