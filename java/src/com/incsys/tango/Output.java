@@ -107,6 +107,7 @@ public class Output
 //	        WRITE(6,1000) I,(PRTVAR(I,J),J=1,11)
 //1000  	FORMAT(' ',8X,I3,F8.3,13F8.4)
 			_wrtr.printf("         %3d%8.3f", i+1,_cb.prtvar[i][0]);
+			@SuppressWarnings("resource")
 			PrintWriter pw = (_csvout == null) ? null : _unitout.get(i);
 			if (_csvout != null)
 			{

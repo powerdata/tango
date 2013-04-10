@@ -68,13 +68,6 @@ public class CommonBlock
 	final public float[][] prtvar;
 	
 	/* Common data not present in original algorithm */
-	/*
-	 * A specific node order was only introduced to make comparison of the
-	 * admittance matrices possible between algorithms. Sorting the nodes is
-	 * not necessary and should be removed
-	 * TODO:  remove the node list once debugging is finished
-	 */
-	public List<Node> nodelist;
 
 	/*
 	 * The algorithm expects a consistent ordering of generators. We need to

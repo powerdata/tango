@@ -1,6 +1,8 @@
 package com.incsys.tango;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.powerdata.mdleng.transmission.csvimp.BasecaseLoad;
@@ -38,7 +40,9 @@ public class Netred
 		Map<String,BasecaseNode> bcnode = _model.getBasecaseNode();
 		Map<String,BasecaseLoad> bcload = _model.getBasecaseLoad();
 		
-		int nbus = _cb.nodelist.size();
+		/** keep a consistent node order for this routine */
+		List<Node> nodelist = new ArrayList<>(_model.getNode().values());
+		int nbus = nodelist.size();
 
 //		Dim E(100) As Cmplx
 		ComplexList e = new ComplexList(nbus);
@@ -109,7 +113,7 @@ public class Netred
 		HashMap<String,Integer> nodeid = new HashMap<>(nbus);
 		for(int i=0; i < nbus; ++i)
 		{
-			nodeid.put(_cb.nodelist.get(i).getID(), i);
+			nodeid.put(nodelist.get(i).getID(), i);
 			y[i] = new ComplexList(nbus);
 		}
 		
@@ -130,7 +134,7 @@ public class Netred
 		for (int i=0; i < nbus; ++i)
 		{
 //		    pbus = Worksheets("Buses").Cells(I + 1, 1)
-			Node pbus = _cb.nodelist.get(i);
+			Node pbus = nodelist.get(i);
 			BasecaseNode casend = bcnode.get(pbus.getID());
 //		    NTYPE = Worksheets("Buses").Cells(I + 1, 8)
 			BasecaseNode.Type ntype = casend.getType();
@@ -525,14 +529,14 @@ public class Netred
 		//		For I = 1 To NGEN
 		for(int i=0; i < ngen; ++i)
 		{
-			Node gi = _cb.nodelist.get(gbus[i]);
+			Node gi = nodelist.get(gbus[i]);
 			int gindx = _cb.genndmap.get(gi.getID());
 //		    For J = 1 To NGEN
 			for(int j=0; j < ngen; ++j)
 			{
 //		        YG(I, J).Re = Y(GBUS(I), GBUS(J)).Re
 //		        YG(I, J).Im = Y(GBUS(I), GBUS(J)).Im
-				Node gj = _cb.nodelist.get(gbus[j]);
+				Node gj = nodelist.get(gbus[j]);
 				int gjndx = _cb.genndmap.get(gj.getID());
 				_cb.y[gindx].set(gjndx, y[gbus[i]].get(gbus[j]));
 

@@ -403,34 +403,12 @@ public class Tango
 	
 	private void prepCsv()
 	{
-
-		Comparator<PsrObject> pcomp = new Comparator<PsrObject>()
-		{
-			@Override
-			public int compare(PsrObject o1, PsrObject o2)
-			{
-				int a0 = o1.getIndex();
-				int a1 = o2.getIndex();
-				return a0-a1;
-			}};
 		
-		/*
-		 * A specific node order was only introduced to make comparison of the
-		 * admittance matrices possible between algorithms. Sorting the nodes is
-		 * not necessary and should be removed
-		 * TODO:  remove the node list once debugging is finished
-		 */
-		Map<String,Node> nodemap = _csv.getNode();
-		ArrayList<Node> node = new ArrayList<>(nodemap.values());
-		Collections.sort(node, pcomp);
-		_cb.nodelist = node;
-	
 		/* make a specific order to the units */
 		Map<String,SynchronousMachine> smap = _csv.getSynchronousMachine();
 		int ngen = smap.size();
 		
 		ArrayList<SynchronousMachine> smlist = new ArrayList<>(smap.values());
-		Collections.sort(smlist, pcomp);
 		ArrayList<GeneratingUnit> genlist = new ArrayList<>(ngen);
 		Map<String,GeneratingUnit> gumap = _csv.getGeneratingUnit();
 		HashMap<String,Integer> smndmap = new HashMap<>(ngen);
