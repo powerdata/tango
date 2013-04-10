@@ -231,8 +231,7 @@ public class Tango
 			Node node = mapnode.get(snode);
 			pt = bcgu.getMW();
 			qt = bcsm.getMVAr();
-//			vmag = bcnd.getVm() / node.getNominalKV();
-			vmag = bcnd.getVm();
+			vmag = bcnd.getVm() / node.getNominalKV();
 			varg = bcnd.getVa();
 //	        WRITE(6,1045) I,PT,QT,VMAG,VARG
 //1045  	FORMAT(1X,I5,5X,2P2F10.4,0P2F10.5)

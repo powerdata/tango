@@ -139,8 +139,7 @@ public class Netred
 //		    NTYPE = Worksheets("Buses").Cells(I + 1, 8)
 			BasecaseNode.Type ntype = casend.getType();
 //		    EMAG(I) = Worksheets("Buses").Cells(I + 1, 11)
-//			emag[i] = casend.getVm() / pbus.getNominalKV();
-			emag[i] = casend.getVm();
+			emag[i] = casend.getVm() / pbus.getNominalKV();
 //		    ARG = Worksheets("Buses").Cells(I + 1, 12)
 			float arg = casend.getVa();
 //		    pga = Worksheets("Buses").Cells(I + 1, 7)
