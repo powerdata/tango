@@ -26,7 +26,7 @@ public class Complex
 	final public float re() {return _re;}
 	final public float im() {return _im;}
 	
-	public Complex inv()
+	final public Complex inv()
 	{
 		float den = _re*_re+_im*_im;
 		return new Complex(_re/den, _im/-den);
@@ -104,6 +104,13 @@ public class Complex
 		sb.append(_im);
 		sb.append(')');
 		return sb.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		Complex o = (Complex) obj;
+		return (_re == o._re && _im == o._im);
 	}
 	
 }

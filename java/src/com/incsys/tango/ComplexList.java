@@ -25,6 +25,12 @@ public class ComplexList
 		_im[i] = v.im();
 	}
 	
+	public void set(int i, float re, float im)
+	{
+		_re[i] = re;
+		_im[i] = im;
+	}
+	
 	public float abs(int idx)
 	{
 		float re = _re[idx];
@@ -38,10 +44,22 @@ public class ComplexList
 		_im[idx] += v.im();
 	}
 
+	public void add(int idx, float re, float im)
+	{
+		_re[idx] += re;
+		_im[idx] += im;
+	}
+
 	public void sub(int idx, Complex v)
 	{
 		_re[idx] -= v.re();
 		_im[idx] -= v.im();
+	}
+
+	public void sub(int idx, float re, float im)
+	{
+		_re[idx] -= re;
+		_im[idx] -= im;
 	}
 
 	@Override
@@ -67,6 +85,7 @@ public class ComplexList
 		}
 		return rv;
 	}
+
 	
 	
 }

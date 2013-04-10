@@ -1,5 +1,13 @@
 package com.incsys.tango;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.powerdata.mdleng.transmission.csvimp.GeneratingUnit;
+import com.powerdata.mdleng.transmission.csvimp.Node;
+import com.powerdata.mdleng.transmission.csvimp.SynchronousMachine;
+
 public class CommonBlock
 {
 	public static final int GenMaxAttrib = 16;
@@ -58,6 +66,27 @@ public class CommonBlock
 	
 	/* Block 9 */
 	final public float[][] prtvar;
+	
+	/* Common data not present in original algorithm */
+	/*
+	 * A specific node order was only introduced to make comparison of the
+	 * admittance matrices possible between algorithms. Sorting the nodes is
+	 * not necessary and should be removed
+	 * TODO:  remove the node list once debugging is finished
+	 */
+	public List<Node> nodelist;
+
+	/*
+	 * The algorithm expects a consistent ordering of generators. We need to
+	 * store that, and a way to find the order given a specific generator node
+	 */
+
+	/** Consistent ordering of generators */
+	public List<GeneratingUnit> genlist;
+	/** Consistent ordering of synchronous machines (same order as units)*/
+	public List<SynchronousMachine> smlist;
+	/** lookup unit index by node */
+	public Map<String,Integer> genndmap;
 	
 	public CommonBlock(int maxgen)
 	{

@@ -6,6 +6,7 @@ import java.io.LineNumberReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Deprecated
 class PsdDataReader
 {
 	protected static Pattern _WS = Pattern.compile("\\S+");
