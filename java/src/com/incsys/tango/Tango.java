@@ -3,6 +3,7 @@ package com.incsys.tango;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,6 +16,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 import com.powerdata.mdleng.transmission.csvimp.BasecaseGeneratingUnit;
 import com.powerdata.mdleng.transmission.csvimp.BasecaseNode;
@@ -23,14 +26,13 @@ import com.powerdata.mdleng.transmission.csvimp.CsvMemoryStore;
 import com.powerdata.mdleng.transmission.csvimp.Exciter;
 import com.powerdata.mdleng.transmission.csvimp.GeneratingUnit;
 import com.powerdata.mdleng.transmission.csvimp.Node;
-import com.powerdata.mdleng.transmission.csvimp.PsrObject;
 import com.powerdata.mdleng.transmission.csvimp.SynchronousMachine;
 
 public class Tango
 {
 	public static final float HalfPI = (float)Math.PI/2F;
 	public static final float Deg2Rad = (float)Math.PI/180F;
-	
+
 	protected CommonBlock _cb;
 	protected CsvMemoryStore _csv;
 	protected PrintWriter _wrtr;
@@ -100,20 +102,21 @@ public class Tango
 //	     	  1XD1(I),XQ(I),XQ1(I),TD1(I),TQ1(I),DAMP(I),C1(I),C2(I)
 			
 			GeneratingUnit gu = _cb.genlist.get(i);
+			SynchronousMachine sm = _cb.smlist.get(i);
 			_cb.pbase[i] = gu.getMaxOperatingMW();
 			//TODO:  add intertia to the CSV files, we do store that in the CIM
-			_cb.h[i] = GeneratorDefaults.h;
-			_cb.r[i] = GeneratorDefaults.ra;
-			_cb.xl[i] = GeneratorDefaults.xl;
-			_cb.xd[i] = GeneratorDefaults.xd;
-			_cb.xd1[i] = GeneratorDefaults.xd1;
-			_cb.xq[i] = GeneratorDefaults.xq;
-			_cb.xq1[i] = GeneratorDefaults.xq1;
-			_cb.td1[i] = GeneratorDefaults.td1;
-			_cb.tq1[i] = GeneratorDefaults.tq1;
-			_cb.damp[i] = GeneratorDefaults.d;
-			_cb.c1[i] = GeneratorDefaults.c1;
-			_cb.c2[i] = GeneratorDefaults.c2;
+			_cb.h[i] = testNull(sm.getInertia(), GeneratorDefaults.h);
+			_cb.r[i] = testNull(sm.getStatorResistance(), GeneratorDefaults.ra);
+			_cb.xl[i] = testNull(sm.getStatorLeakageReactance(), GeneratorDefaults.xl);
+			_cb.xd[i] = testNull(sm.getDirectSyncReactance(), GeneratorDefaults.xd);
+			_cb.xd1[i] = testNull(sm.getDirectTransientReactance(), GeneratorDefaults.xd1);
+			_cb.xq[i] = testNull(sm.getQuadSyncReactance(), GeneratorDefaults.xq);
+			_cb.xq1[i] = testNull(sm.getQuadTransientReactance(), GeneratorDefaults.xq1);
+			_cb.td1[i] = testNull(sm.getDirectTransientRotorTC(), GeneratorDefaults.td1);
+			_cb.tq1[i] = testNull(sm.getQuadTransientRotorTC(), GeneratorDefaults.tq1);
+			_cb.damp[i] = testNull(sm.getDamping(), GeneratorDefaults.d);
+			_cb.c1[i] = testNull(sm.getC1(), GeneratorDefaults.c1);
+			_cb.c2[i] = testNull(sm.getC2(), GeneratorDefaults.c2);
 			
 //1010      FORMAT(8F10.4)
 //	    	WRITE(6,1015) I,       PBASE(I),H(I),R(I),XL(I),XD(I),
@@ -378,7 +381,7 @@ public class Tango
 				if ((nstep % pstep) == 0)
 				{
 //			    	CALL OUTPUT(NGEN)
-					output.output(ngen);
+					output.output(ngen, tc.useCenterOfInertia());
 //			    	NPRINT=0
 					nprint++;
 //125 			CONTINUE
@@ -400,6 +403,11 @@ public class Tango
 		output.close();
 	}
 	
+	private float testNull(Float val, float defval)
+	{
+		return (val == null) ? defval : val;
+	}
+
 	private void prepCsv()
 	{
 		
@@ -408,6 +416,18 @@ public class Tango
 		int ngen = smap.size();
 		
 		ArrayList<SynchronousMachine> smlist = new ArrayList<>(smap.values());
+		
+		// sorting the list has a convenient side effect of producing output in the same order.  Not a long-term solution.
+		Collections.sort(smlist, new Comparator<SynchronousMachine>()
+		{
+			@Override
+			public int compare(SynchronousMachine arg0, SynchronousMachine arg1)
+			{
+				return arg0.getIndex() - arg1.getIndex();
+			}
+		});
+		
+		
 		ArrayList<GeneratingUnit> genlist = new ArrayList<>(ngen);
 		Map<String,GeneratingUnit> gumap = _csv.getGeneratingUnit();
 		HashMap<String,Integer> smndmap = new HashMap<>(ngen);
@@ -434,8 +454,7 @@ public class Tango
 		String outname = null;
 		String  snrdbg = null;
 		String sevent = null;
-		String stsint = null;
-		String stspr = null;
+		String scontrol = null;
 		String resdir = null;
 		
 		int narg = args.length;
@@ -456,14 +475,11 @@ public class Tango
 				case "nrdbg":
 					snrdbg = args[i++];
 					break;
+				case "control":
+					scontrol = args[i++];
+					break;
 				case "event":
 					sevent = args[i++];
-					break;
-				case "tsintegrate":
-					stsint = args[i++];
-					break;
-				case "tsprint":
-					stspr = args[i++];
 					break;
 				case "resultdir":
 					resdir = args[i++];
@@ -495,9 +511,9 @@ public class Tango
 			showHelp();
 			System.exit(1);
 		}
-		if (stsint == null || stspr == null)
+		if (scontrol == null)
 		{
-			System.err.println("valid --tsintegrate and --tsprint parameters required");
+			System.err.println("valid --scontrol required");
 			showHelp();
 			System.exit(1);
 		}
@@ -505,7 +521,7 @@ public class Tango
 		
 		if (resdir == null) resdir = System.getProperty("user.dir");
 		Tango t = new Tango(cms, out, new File(resdir));
-		t.runTango(evlist, new TangoControl(stsint, stspr), dbg);
+		t.runTango(evlist, new TangoControl(scontrol), dbg);
 
 		if (outname==null)
 			out.close();
@@ -533,7 +549,7 @@ public class Tango
 
 	public static void showHelp()
 	{
-		System.out.println("usage: --csvdir model_csv_files --tsintegrate integration_time_step --tsprint print_time_step ");
+		System.out.println("usage: --csvdir model_csv_files --control control_properties ");
 		System.out.println("--event event_csv_file [ --output file_name] [ --nrdbg network_reduction_debugfile ] [ --help ]");
 	}
 
@@ -589,15 +605,54 @@ class TangoEvent
 
 class TangoControl
 {
-	private float integrationTimeStep;
-	private float outputTimeStep;
-	public TangoControl(String tsint, String tsout)
+	private static TangoControl _ControlDefaults = new TangoControl(0.01F, 0.02F, true);
+	
+	private float _integrationTimeStep;
+	private float _outputTimeStep;
+	private boolean _useCenterOfInertia;
+	public TangoControl(float tsint, float tsout,  boolean coi)
 	{
-		integrationTimeStep = Float.parseFloat(tsint);
-		outputTimeStep = Float.parseFloat(tsout);
+		_integrationTimeStep = tsint;
+		_outputTimeStep = tsout;
+		_useCenterOfInertia = coi;
 	}
-	final public float getIntegrationTimeStep() {return integrationTimeStep;}
-	final public float getOutputTimeStep() {return outputTimeStep;}
+	public TangoControl(String scontrol) throws IOException
+	{
+		float tsint = _ControlDefaults.getIntegrationTimeStep();
+		float tsout = _ControlDefaults.getOutputTimeStep();
+		boolean coi = _ControlDefaults.useCenterOfInertia();
+		if (scontrol != null && !scontrol.isEmpty())
+		{
+			Properties p = new Properties();
+			p.load(new BufferedReader(new FileReader(scontrol)));
+			for(Entry<Object,Object> e : p.entrySet())
+			{
+				String k = e.getKey().toString().toLowerCase();
+				String v = e.getValue().toString();
+				switch(k)
+				{
+				case "integrationtimestep":
+					tsint = Float.parseFloat(v);
+					break;
+				case "outputtimestep":
+					tsout = Float.parseFloat(v);
+					break;
+				case "usecenterofinertia":
+					char c = v.toLowerCase().charAt(0);
+					coi = (c == 'y' || c == 't' || c == '1');
+					break;
+				default:
+				}
+			}
+		}
+		_integrationTimeStep = tsint;
+		_outputTimeStep = tsout;
+		_useCenterOfInertia = coi;
+	}
+
+	final public float getIntegrationTimeStep() {return _integrationTimeStep;}
+	final public float getOutputTimeStep() {return _outputTimeStep;}
+	final public boolean useCenterOfInertia() {return _useCenterOfInertia;}
 }
 
 final class GeneratorDefaults
@@ -629,3 +684,4 @@ final class ExciterDefaults
 	public static float a = 0.0016F;
 	public static float b = 1.456F;
 }
+

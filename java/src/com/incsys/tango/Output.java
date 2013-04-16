@@ -56,7 +56,7 @@ public class Output
 	}
 	
 
-	public void output(int ngen)
+	public void output(int ngen, boolean usecoi)
 	{
 //	    INTEGER NGEN,I,J
 		int i, j;
@@ -95,11 +95,15 @@ public class Output
 			}
 		}
 
-		float coi = 0F;
-		for (int ig=0; ig < ngen; ++ig) coi += _cb.prtvar[ig][0];
-		coi /= ngen;
-		for(int ig=0; ig < ngen; ++ig) _cb.prtvar[ig][0] -= coi;
-		
+		if (usecoi)
+		{
+			float coi = 0F;
+			for (int ig = 0; ig < ngen; ++ig)
+				coi += _cb.prtvar[ig][0];
+			coi /= ngen;
+			for (int ig = 0; ig < ngen; ++ig)
+				_cb.prtvar[ig][0] -= coi;
+		}
 		
 //	    DO 10 I=1,NGEN
 		for(i=0; i < ngen; ++i)
