@@ -1,4 +1,5 @@
 package com.powerdata.pse.csvmemdb;
+// This is a comment
 
 public class ControlArea extends PsrNamedObject
 {
