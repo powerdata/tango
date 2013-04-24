@@ -1,4 +1,4 @@
-package pdc.de.psmcsv;
+package com.powerdata.pse.csvmemdb;
 
 public class ControlArea extends PsrNamedObject
 {
