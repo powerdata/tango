@@ -45,7 +45,7 @@ public class Tango
 		_resdir = resdir;
 	}
 
-	public void runTango(List<TangoEvent> event, TangoControl tc, PrintWriter nrdbg) throws IOException
+	public void runTango(List<TangoEvent> event, TangoControl tc) throws IOException
 	{
 		int ngen = _csv.getGeneratingUnit().size();
 		
@@ -287,10 +287,6 @@ public class Tango
 //70    CONTINUE
 			
 		Netred netred = new Netred(_cb, _csv);
-		if (nrdbg != null)
-		{
-			nrdbg.println("Name,Node,MW,MVAr");
-		}
 		Iterator<TangoEvent> it = event.iterator();
 
 		do
@@ -449,10 +445,8 @@ public class Tango
 	 */
 	static public void main(String[] args) throws IOException
 	{
-
 		String scsvdir = System.getProperty("user.dir");
 		String outname = null;
-		String  snrdbg = null;
 		String sevent = null;
 		String scontrol = null;
 		String resdir = null;
@@ -471,9 +465,6 @@ public class Tango
 					break;
 				case "output":
 					outname = args[i++];
-					break;
-				case "nrdbg":
-					snrdbg = args[i++];
 					break;
 				case "control":
 					scontrol = args[i++];
@@ -499,8 +490,6 @@ public class Tango
 		
 		CsvMemoryStore cms = new CsvMemoryStore();
 		cms.readModel(new File(scsvdir));
-		PrintWriter dbg = (snrdbg==null)?null:
-			new PrintWriter(new BufferedWriter(new FileWriter(snrdbg)));
 		PrintWriter out =new PrintWriter(new BufferedWriter(
 				(outname == null) ? new OutputStreamWriter(System.out)
 					: new FileWriter(outname)));
@@ -521,14 +510,12 @@ public class Tango
 		
 		if (resdir == null) resdir = System.getProperty("user.dir");
 		Tango t = new Tango(cms, out, new File(resdir));
-		t.runTango(evlist, new TangoControl(scontrol), dbg);
+		t.runTango(evlist, new TangoControl(scontrol));
 
 		if (outname==null)
 			out.close();
 		else
 			out.flush();
-		if (dbg!=null)
-			dbg.close();
 	}
 	
 	private static List<TangoEvent> loadEvents(String sevent) throws IOException
@@ -550,7 +537,7 @@ public class Tango
 	public static void showHelp()
 	{
 		System.out.println("usage: --csvdir model_csv_files --control control_properties ");
-		System.out.println("--event event_csv_file [ --output file_name] [ --nrdbg network_reduction_debugfile ] [ --help ]");
+		System.out.println("--event event_csv_file [ --output file_name] [ --help ]");
 	}
 
 }
