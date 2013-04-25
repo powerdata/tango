@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.powerdata.mdleng.transmission.csvimp.BasecaseLoad;
-import com.powerdata.mdleng.transmission.csvimp.BasecaseNode;
-import com.powerdata.mdleng.transmission.csvimp.CsvMemoryStore;
-import com.powerdata.mdleng.transmission.csvimp.Line;
-import com.powerdata.mdleng.transmission.csvimp.Load;
-import com.powerdata.mdleng.transmission.csvimp.Node;
-import com.powerdata.mdleng.transmission.csvimp.SeriesDevice;
-import com.powerdata.mdleng.transmission.csvimp.SwitchedShunt;
-import com.powerdata.mdleng.transmission.csvimp.TransformerWinding;
+import com.powerdata.pse.csvmemdb.BasecaseLoad;
+import com.powerdata.pse.csvmemdb.BasecaseNode;
+import com.powerdata.pse.csvmemdb.CsvMemoryStore;
+import com.powerdata.pse.csvmemdb.Line;
+import com.powerdata.pse.csvmemdb.Load;
+import com.powerdata.pse.csvmemdb.Node;
+import com.powerdata.pse.csvmemdb.SeriesDevice;
+import com.powerdata.pse.csvmemdb.SwitchedShunt;
+import com.powerdata.pse.csvmemdb.TransformerWinding;
 
 //'     NETWORK REDUCTION PROGRAM
 public class Netred

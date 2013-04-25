@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.powerdata.mdleng.transmission.csvimp.GeneratingUnit;
-import com.powerdata.mdleng.transmission.csvimp.Node;
-import com.powerdata.mdleng.transmission.csvimp.SynchronousMachine;
+import com.powerdata.pse.csvmemdb.GeneratingUnit;
+import com.powerdata.pse.csvmemdb.SynchronousMachine;
+
 
 public class CommonBlock
 {
