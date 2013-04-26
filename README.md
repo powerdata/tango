@@ -3,7 +3,7 @@ The program has been developed as a special purpose program for allowing detaile
 
 ## Directories
 
-* fortran
+### fortran
 
     Original Fortran source code.  Model, event, and control inputs are processed through standard input.
 A file containing these parameters for the 2-bus test example study can be found in examplestudy.out.
@@ -11,7 +11,7 @@ The file, examplestudy.out, contains the results.
 
     run make to build the executable.  Make test will run the example study and output results.
 
-* java
+### java
     Java-language line-by-line translation of the fortran source code into Java, used to be able to have
 a solid baseline to test a later fully-featured java implementation.
 
@@ -30,6 +30,15 @@ Case formats.  At this time, a single-bus study model is required (no switching)
     Examples are provided in the Makefile.  To execute the routine against the 2-bus test model
 run "make test".  Additionally, to execute the PALCO model, run "make palco"
 
+### examples
+
+* 2gen
+
+    * model contains the 2-generator model as described in the Tango report.
+
+    * results contains the transient stability for both units.
+
+    * 
 
 ## More Information
 
