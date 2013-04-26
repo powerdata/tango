@@ -28,14 +28,23 @@ The original version corresponding to the fortran code is tagged as
 The current version has been modified to allow additional models using the PowerSimulator Model and
 Case formats.  At this time, a single-bus study model is required (no switching).
 
-To build the code:
+#### To build the code:
 
     make
 
-usage: 
+#### Usage: 
 
     java -cp tango.jar  --csvdir model_csv_files --control control_properties
-    --event event_csv_file --resultdir directory_for_unit_results [ --output file_name] [ --help ]
+    --event event_csv_file --resultdir directory_for_unit_results [ --help ]
+    
+*model_csv_files* - directory containing the model using PowerSimulator Model and Case formats
+
+*control_properties* - file containing control parameters for integration time step (sec), output time
+step (sec), and a flag whether or not to use center of inertia when computing rotor angle.
+
+*event_csv_file* - set of faults either on busses or branches to study.
+
+*resultdir* - directory in which to place the unit results in CSV format.
 
 Two examples are provided in the Makefile.  To execute the routine against the 2-generator test model,
 and place results in /tmp/2gen:
