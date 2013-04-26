@@ -6,13 +6,11 @@ public class Gen1
 {
 	final public static float Rad2Deg = 180F/(float)Math.PI;
 	CommonBlock _cb;
-	PrintWriter _wrtr;
 	float[] csat;
 	
-	public Gen1(CommonBlock cblk, int ngen, PrintWriter wrtr)
+	public Gen1(CommonBlock cblk, int ngen)
 	{
 		_cb = cblk;
-		_wrtr = wrtr;
 		csat = new float[ngen];
 	}
 

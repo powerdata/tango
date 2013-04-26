@@ -1,0 +1,4 @@
+Finish Time,Fault Bus,From Bus,To Bus,Circuit
+0.1,,,,
+0.4,HOMER-BUS 1:BUS 2,,,
+3,,LOCHER-BUS 1:BUS 2,HOMER-BUS 1:BUS 2,LOES-HOM

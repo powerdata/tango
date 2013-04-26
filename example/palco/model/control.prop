@@ -1,0 +1,19 @@
+#
+# Sample control file.
+#
+
+#
+# Integration time step
+#
+integrationTimeStep = 0.01
+
+#
+# Output time step
+#
+outputTimeStep = 0.02
+
+#
+# Use center of inertia when computing rotor angle
+#
+useCenterOfInertia = true;
+

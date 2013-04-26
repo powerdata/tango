@@ -5,12 +5,10 @@ import java.io.PrintWriter;
 public class Matrix
 {
 	protected CommonBlock _cb;
-	protected PrintWriter _wrtr;
 	
-	public Matrix(CommonBlock cblk, PrintWriter wrtr)
+	public Matrix(CommonBlock cblk)
 	{
 		_cb = cblk;
-		_wrtr = wrtr;
 	}
 	public void matrix(int ngen)
 	{

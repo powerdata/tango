@@ -1,5 +1,6 @@
 package com.incsys.tango;
 
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 public class Nwsol
@@ -135,10 +136,12 @@ public class Nwsol
 			
 		if (iter >= 10)
 		{
-			_wrtr.println("SALIENCY ITERATIONS NOT CONVERGED");
+			PrintWriter pw = (_wrtr == null) ?
+					new PrintWriter(new OutputStreamWriter(System.err)) : _wrtr;
+			pw.println("SALIENCY ITERATIONS NOT CONVERGED");
 			for (i=0; i < ngen; ++i)
 			{
-				_wrtr.format(" TERM %5d%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f\n", 
+				pw.format(" TERM %5d%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f%10.4f\n", 
 					i+1, _cb.vt.re()[i], _cb.vt.im()[i], _cb.ct.re()[i], _cb.ct.im()[i], vd, vq, vd1, vq1, id, iq);
 			}
 		}

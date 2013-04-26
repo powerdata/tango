@@ -36,7 +36,11 @@ public class Avr1
 //	     1' UNIT',I3/)
 		if (_cb.out[i][5] < _cb.vrmin[i] || _cb.out[i][5] > _cb.vrmax[i])
 		{
-			wrtr.println("**** AVR VOLTAGE LIMIT IS EXCEEDED BY INITIAL FIELD ON UNIT"+(i+1));
+			String msg = "**** AVR VOLTAGE LIMIT IS EXCEEDED BY INITIAL FIELD ON UNIT"+(i+1);
+			if (wrtr == null)
+				System.err.println(msg);
+			else
+				wrtr.println(msg);
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
+@Deprecated
 public class Plot
 {
 	protected CommonBlock _cb;

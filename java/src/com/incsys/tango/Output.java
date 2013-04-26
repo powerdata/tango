@@ -68,9 +68,12 @@ public class Output
 //	     4'FACTOR   VOLTS'/)
 		if (_cb.time == 0F)
 		{
-			_wrtr.println("SIMULATED RESPONSES\n");
-			_wrtr.println("   TIME  GEN  ROTOR   ROTOR    EQ'     ED'    TERM     ELEC-POWER     FIELD   MECH    SATN   AIR GAP");
-			_wrtr.println("   SECS   NO  ANGLE   SPEED    VOLTS   VOLTS  VOLTS    REAL   IMAG    VOLTS   POWER  FACTOR   VOLTS\n");
+			if (_wrtr != null)
+			{
+				_wrtr.println("SIMULATED RESPONSES\n");
+				_wrtr.println("   TIME  GEN  ROTOR   ROTOR    EQ'     ED'    TERM     ELEC-POWER     FIELD   MECH    SATN   AIR GAP");
+				_wrtr.println("   SECS   NO  ANGLE   SPEED    VOLTS   VOLTS  VOLTS    REAL   IMAG    VOLTS   POWER  FACTOR   VOLTS\n");
+			}
 			
 			if (_csvout != null)
 			{
@@ -86,7 +89,8 @@ public class Output
 		
 //	    WRITE(6,1010) TIME
 //1010  FORMAT(' ',F7.3)
-		_wrtr.printf(" %7.3f\n", _cb.time);
+		if (_wrtr != null)
+			_wrtr.printf(" %7.3f\n", _cb.time);
 		if (_csvout != null)
 		{
 			for(PrintWriter pw : _unitout)
@@ -110,7 +114,8 @@ public class Output
 		{
 //	        WRITE(6,1000) I,(PRTVAR(I,J),J=1,11)
 //1000  	FORMAT(' ',8X,I3,F8.3,13F8.4)
-			_wrtr.printf("         %3d%8.3f", i+1,_cb.prtvar[i][0]);
+			if (_wrtr != null)
+				_wrtr.printf("         %3d%8.3f", i+1,_cb.prtvar[i][0]);
 			@SuppressWarnings("resource")
 			PrintWriter pw = (_csvout == null) ? null : _unitout.get(i);
 			if (_csvout != null)
@@ -120,7 +125,8 @@ public class Output
 			}
 			for(j=1; j < 11; ++j)
 			{
-				_wrtr.printf("%8.4f", _cb.prtvar[i][j]);
+				if (_wrtr != null)
+					_wrtr.printf("%8.4f", _cb.prtvar[i][j]);
 				if (_csvout != null)
 				{
 					pw.print(',');
@@ -134,7 +140,7 @@ public class Output
 				pw.print(',');
 				pw.print(_cb.prtvar[i][6]*_cb.pbase[i]);
 			}
-			_wrtr.println();
+			if (_wrtr != null) _wrtr.println();
 			if (_csvout != null) pw.println();
 //10    CONTINUE
 		}
