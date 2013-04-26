@@ -63,7 +63,7 @@ and benchmarks used in original paper.
 
     * results contains the expected transient stability results for each unit.
 
-See the java and fortran sections to re-run the examles.
+See the java and fortran sections to locally generate the examples.
 
 
 ## More Information
