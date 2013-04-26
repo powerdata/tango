@@ -22,18 +22,10 @@ import com.powerdata.pse.csvmemdb.BasecaseGeneratingUnit;
 import com.powerdata.pse.csvmemdb.BasecaseNode;
 import com.powerdata.pse.csvmemdb.BasecaseSynchronousMachine;
 import com.powerdata.pse.csvmemdb.CsvMemoryStore;
+import com.powerdata.pse.csvmemdb.Exciter;
 import com.powerdata.pse.csvmemdb.GeneratingUnit;
 import com.powerdata.pse.csvmemdb.Node;
 import com.powerdata.pse.csvmemdb.SynchronousMachine;
-
-//import com.powerdata.mdleng.transmission.csvimp.BasecaseGeneratingUnit;
-//import com.powerdata.mdleng.transmission.csvimp.BasecaseNode;
-//import com.powerdata.mdleng.transmission.csvimp.BasecaseSynchronousMachine;
-//import com.powerdata.mdleng.transmission.csvimp.CsvMemoryStore;
-//import com.powerdata.mdleng.transmission.csvimp.Exciter;
-//import com.powerdata.mdleng.transmission.csvimp.GeneratingUnit;
-//import com.powerdata.mdleng.transmission.csvimp.Node;
-//import com.powerdata.mdleng.transmission.csvimp.SynchronousMachine;
 
 public class Tango
 {
@@ -111,7 +103,7 @@ public class Tango
 			GeneratingUnit gu = _cb.genlist.get(i);
 			SynchronousMachine sm = _cb.smlist.get(i);
 			_cb.pbase[i] = gu.getMaxOperatingMW();
-			//TODO:  add intertia to the CSV files, we do store that in the CIM
+			//TODO:  add inertia to the CSV files, we do store that in the CIM
 			_cb.h[i] = testNull(sm.getInertia(), GeneratorDefaults.h);
 			_cb.r[i] = testNull(sm.getStatorResistance(), GeneratorDefaults.ra);
 			_cb.xl[i] = testNull(sm.getStatorLeakageReactance(), GeneratorDefaults.xl);
@@ -450,7 +442,7 @@ public class Tango
 	 * @param args
 	 * @throws IOException 
 	 */
-	static public void main(String[] args) throws IOException
+	static public void main(String[] args) throws Exception
 	{
 		String scsvdir = System.getProperty("user.dir");
 		String outname = null;
