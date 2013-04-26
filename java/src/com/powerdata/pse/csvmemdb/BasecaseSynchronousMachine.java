@@ -20,11 +20,13 @@ public class BasecaseSynchronousMachine extends PsrObject
 	private SynchronousMachineOperatingMode _opmode;
 	private AVRMode _avrmode;
 	private Float _mvarsetpt;
+	private Float _mvar;
 
 	public Float getKVSetPoint() {return _kvsetpoint;}
 	public SynchronousMachineOperatingMode getSynchronousMachineOperatingMode() {return _opmode;}
 	public AVRMode getAVRMode() {return _avrmode;}
 	public Float getMVArSetPoint() {return _mvarsetpt;}
+	public Float getMVAr() {return _mvar;}
 	
 	@Override
 	public void configure(RecordReader rr)
@@ -35,6 +37,7 @@ public class BasecaseSynchronousMachine extends PsrObject
 			SynchronousMachineOperatingMode.valueOf(smode.toUpperCase());
 		_avrmode = AVRMode.fromString(rr.getProperty("avrmode"));
 		_mvarsetpt = processFloat(rr, "mvarsetpoint");
+		_mvar = processFloat(rr, "mvar");
 		super.configure(rr);
 	}
 
@@ -50,6 +53,8 @@ public class BasecaseSynchronousMachine extends PsrObject
 		sb.append(_avrmode);
 		sb.append(", MVArSetPoint=");
 		sb.append(_mvarsetpt);
+		sb.append(", mvar=");
+		sb.append(_mvar);
 		return sb.toString();
 	}
 }

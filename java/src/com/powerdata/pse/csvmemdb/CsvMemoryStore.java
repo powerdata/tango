@@ -124,6 +124,29 @@ public class CsvMemoryStore
 	public Map<String,SVC> getSVC() {return getModelData(ModelData.SVC);}
 	public Map<String,PhaseTapChanger> getPhaseTapChanger() {return getModelData(ModelData.PhaseTapChanger);}
 	
+	public Map<String, SwitchedShunt> getSwitchedShunt()
+	{
+		Map<String, SwitchedShunt> cap = getShuntCapacitor();
+		Map<String, SwitchedShunt> reac = getShuntReactor();
+		HashMap<String, SwitchedShunt> rv = 
+				new HashMap<>(cap.size() + reac.size());
+		rv.putAll(cap);
+		rv.putAll(reac);
+		return rv;
+	}	
+
+	public Map<String, SeriesDevice> getSeriesDevice()
+	{
+		Map<String, SeriesDevice> cap = getSeriesCapacitor();
+		Map<String, SeriesDevice> reac = getSeriesReactor();
+		HashMap<String, SeriesDevice> rv = 
+				new HashMap<>(cap.size() + reac.size());
+		rv.putAll(cap);
+		rv.putAll(reac);
+		return rv;
+	}	
+
+	
 	
 	public Map<String,BasecaseControlArea> getBasecaseControlArea() {return getCaseData(CaseData.ControlArea);}
 	public Map<String,BasecaseLoad> getBasecaseLoad() {return getCaseData(CaseData.Load);}
@@ -175,11 +198,11 @@ public class CsvMemoryStore
 
 		Map<String, T> rv = new HashMap<>();
 
+		int idx = 0;
 		while (r.prepRec(rdr))
 		{
 			T no = clobj.newInstance();
-			no.setup(this);
-			no.configure(r);
+			no.configure(r, idx++);
 //			System.out.println(no.toString());
 			rv.put(no.getID(), no);
 		}

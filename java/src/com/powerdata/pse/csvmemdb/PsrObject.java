@@ -3,20 +3,19 @@ package com.powerdata.pse.csvmemdb;
 public class PsrObject
 {
 	protected CsvMemoryStore _rep;
-	
-	public void setup(CsvMemoryStore rep)
-	{
-		_rep = rep;
-	}
-	
-	protected String _id;
-	public void setID(String id) {id = _id;}
+	/** order read from CSV file.  In general not a good idea to need this */
+	private int _index;
+	private String _id;
+
 	public String getID() {return _id;}
 	
-
-	public void configure(RecordReader rr)
+	/** order read from CSV file.  In general not a good idea to need this */
+	public int getIndex() {return _index;}
+	
+	public void configure(RecordReader rr, int ndx)
 	{
 		_id = rr.getProperty("id");
+		_index = ndx;
 	}
 	
 	protected StringBuilder reportString()
