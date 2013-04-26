@@ -23,8 +23,13 @@ clean:
 	rm -f $(JARFILE)
 	rm -rf bin
 	rm -rf /tmp/2gen
+	rm -rf /tmp/palco
 
 2gen: $(JARFILE)
-	$(JAVA) -jar tango.jar  --csvdir $(EX2GEN)/model --control $(EX2GEN)/model/control.prop \
+	$(JAVA) -jar $(JARFILE)  --csvdir $(EX2GEN)/model --control $(EX2GEN)/model/control.prop \
 		--event $(EX2GEN)/model/events.csv --resultdir /tmp/2gen
+
+palco: $(JARFILE)
+	$(JAVA) -jar $(JARFILE)  --csvdir $(EXPAL)/model --control $(EXPAL)/model/control.prop \
+		--event $(EXPAL)/model/events.csv --resultdir /tmp/palco
 
