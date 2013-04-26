@@ -11,6 +11,7 @@ public class RecordReader
 	protected String[] _cols;
 	protected String[] _rec;
 	HashMap<String,Integer> _colmap;
+	protected int _counter = 0;
 	
 	public void prepCSV(BufferedReader rdr) throws IOException
 	{
@@ -36,8 +37,11 @@ public class RecordReader
 			_rec = new StringParse(l, ",", false).getTokens();
 			rv = true;
 		}
+		++_counter;
 		return rv;
 	}
+	
+	public int getCount() {return _counter;}
 	
 	public String getProperty(String name)
 	{

@@ -12,10 +12,10 @@ public class PsrObject
 	/** order read from CSV file.  In general not a good idea to need this */
 	public int getIndex() {return _index;}
 	
-	public void configure(RecordReader rr, int ndx)
+	public void configure(RecordReader rr)
 	{
 		_id = rr.getProperty("id");
-		_index = ndx;
+		_index = rr.getCount();
 	}
 	
 	protected StringBuilder reportString()

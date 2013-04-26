@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -42,7 +43,8 @@ public class CsvMemoryStore
 		ShuntReactor(SwitchedShunt.class),
 		ShuntCapacitor(SwitchedShunt.class),
 		SVC(SVC.class),
-		PhaseTapChanger(PhaseTapChanger.class);
+		PhaseTapChanger(PhaseTapChanger.class),
+		Exciter(Exciter.class);
 
 		String _filename;
 		Class<? extends PsrObject> _class;
@@ -123,6 +125,7 @@ public class CsvMemoryStore
 	public Map<String,SwitchedShunt> getShuntCapacitor() {return getModelData(ModelData.ShuntCapacitor);}
 	public Map<String,SVC> getSVC() {return getModelData(ModelData.SVC);}
 	public Map<String,PhaseTapChanger> getPhaseTapChanger() {return getModelData(ModelData.PhaseTapChanger);}
+	public Map<String,Exciter> getExciter() {return getModelData(ModelData.Exciter);}
 	
 	public Map<String, SwitchedShunt> getSwitchedShunt()
 	{
@@ -170,7 +173,7 @@ public class CsvMemoryStore
 		return (Map<String, T>) ((rv == null) ? EmptyPsrList : rv);
 	}
 	
-	public void readModel(File dir) throws Exception
+	public void readModel(File dir) throws IOException, ReflectiveOperationException
 	{
 		_model.clear();
 		for (ModelData md : ModelData.values())
@@ -185,7 +188,7 @@ public class CsvMemoryStore
 	}
 	
 	protected <T extends PsrObject> Map<String, T> readRecordsForType(File dir,
-		String fname, Class<T> clobj) throws Exception
+		String fname, Class<T> clobj) throws IOException, ReflectiveOperationException
 	{
 		File f = new File(dir, fname);
 		if (!f.exists()) f = new File(dir, fname.toLowerCase());
@@ -198,11 +201,10 @@ public class CsvMemoryStore
 
 		Map<String, T> rv = new HashMap<>();
 
-		int idx = 0;
 		while (r.prepRec(rdr))
 		{
 			T no = clobj.newInstance();
-			no.configure(r, idx++);
+			no.configure(r);
 //			System.out.println(no.toString());
 			rv.put(no.getID(), no);
 		}
